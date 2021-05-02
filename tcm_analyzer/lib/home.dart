@@ -5,10 +5,35 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
   // declaration
   final myController = TextEditingController();
   List<String> names = ["寧夏枸杞", "熟地黃", "黨參", "甘草", "懷牛膝", "麥門冬"];
+  AnimationController animationController;
+  Animation translation;
+  Animation rotation;
+  Animation otherrotation;
+
+  double getRadians(double degree) {
+    double radian = 57.2958;
+    return degree / radian;
+  }
+
+  @override
+  void initState() {
+    animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 250));
+    translation = Tween(begin: 0.0, end: 1.0).animate(animationController);
+    rotation = Tween<double>(begin: 180.0, end: 0.0).animate(
+        CurvedAnimation(parent: animationController, curve: Curves.easeOut));
+    otherrotation = Tween<double>(begin: 0.0, end: 225.0).animate(
+        CurvedAnimation(parent: animationController, curve: Curves.easeOut));
+    super.initState();
+    animationController.addListener(() {
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,8 +147,125 @@ class _HomePageState extends State<HomePage> {
                       ))
               ],
             ),
+          ),
+
+          // Custom FAB
+          Container(
+            height: MediaQuery.of(context).size.height - 488,
+            width: MediaQuery.of(context).size.width,
+            child: Stack(
+              children: <Widget>[
+                Positioned(
+                  right: 20.0,
+                  bottom: 10.0,
+                  child: Stack(
+                    alignment: Alignment.bottomRight,
+                    children: <Widget>[
+                      // tap box
+                      IgnorePointer(
+                        child: Container(
+                          color: Colors.transparent,
+                          height: 160.0,
+                          width: 170.0,
+                        ),
+                      ),
+
+                      // add image from camera
+                      Transform.translate(
+                        offset: Offset.fromDirection(
+                            getRadians(270), translation.value * 90),
+                        child: Transform(
+                          transform:
+                              Matrix4.rotationZ(getRadians(rotation.value))
+                                ..scale(translation.value),
+                          alignment: Alignment.center,
+                          child: CircularButton(
+                              Colors.red,
+                              60,
+                              50,
+                              Icon(
+                                Icons.add_a_photo_rounded,
+                                color: Colors.white,
+                              ),
+                              () {}),
+                        ),
+                      ),
+
+                      // add image from gallery
+                      Transform.translate(
+                        offset: Offset.fromDirection(
+                            getRadians(180), translation.value * 90),
+                        child: Transform(
+                          transform:
+                              Matrix4.rotationZ(getRadians(rotation.value))
+                                ..scale(translation.value),
+                          alignment: Alignment.center,
+                          child: CircularButton(
+                              Colors.orange,
+                              60,
+                              50,
+                              Icon(
+                                Icons.add_photo_alternate,
+                                color: Colors.white,
+                              ),
+                              () {}),
+                        ),
+                      ),
+
+                      // plus icon button
+                      Transform(
+                        transform:
+                            Matrix4.rotationZ(getRadians(otherrotation.value)),
+                        alignment: Alignment.center,
+                        child: CircularButton(
+                            Color(0xFE2B3F87),
+                            60,
+                            50,
+                            Icon(
+                              Icons.add,
+                              color: Colors.white,
+                            ), () {
+                          if (animationController.isCompleted)
+                            animationController.reverse();
+                          else
+                            animationController.forward();
+                        }),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
           )
         ],
+      ),
+    );
+  }
+}
+
+class CircularButton extends StatelessWidget {
+  // declare variables
+  final double width;
+  final double height;
+  final Color color;
+  final Icon icon;
+  final Function onClick;
+
+  CircularButton(this.color, this.width, this.height, this.icon, this.onClick);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: color,
+        shape: BoxShape.circle,
+      ),
+      width: width,
+      height: height,
+      child: IconButton(
+        icon: icon,
+        enableFeedback: true,
+        onPressed: onClick,
       ),
     );
   }
