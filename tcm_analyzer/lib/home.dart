@@ -6,7 +6,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // declaration
   final myController = TextEditingController();
+  List<String> names = ["寧夏枸杞", "熟地黃", "黨參", "甘草", "懷牛膝", "麥門冬"];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,6 +73,54 @@ class _HomePageState extends State<HomePage> {
                 fontSize: 24.0,
                 fontFamily: 'Abyssinica',
               ),
+            ),
+          ),
+
+          // Recent searches (first)
+          Container(
+            margin: EdgeInsets.only(top: 10.0, left: 10.0),
+            height: 38.0,
+            width: MediaQuery.of(context).size.width,
+            child: TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/info', arguments: names[0]);
+              },
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(names[0],
+                    style: TextStyle(
+                        color: Colors.black.withOpacity(0.5),
+                        fontSize: 18.0,
+                        fontFamily: 'Abyssinica')),
+              ),
+            ),
+          ),
+
+          // Recent searches (second to end)
+          Container(
+            height: 190.0,
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              children: <Widget>[
+                for (int i = 1; i < 6; ++i)
+                  Container(
+                      margin: EdgeInsets.only(left: 10.0),
+                      height: 38.0,
+                      width: MediaQuery.of(context).size.width,
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/info',
+                              arguments: names[i]);
+                        },
+                        child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(names[i],
+                                style: TextStyle(
+                                    color: Colors.black.withOpacity(0.5),
+                                    fontSize: 18.0,
+                                    fontFamily: 'Abyssinica'))),
+                      ))
+              ],
             ),
           )
         ],
