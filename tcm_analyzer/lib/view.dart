@@ -19,14 +19,29 @@ class _ViewPageState extends State<ViewPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("View Page"),
+        backgroundColor: Color(0xFE2B3F87),
       ),
       body: Column(
         children: <Widget>[
           Container(
+            padding: EdgeInsets.only(top: 10.0),
             height: MediaQuery.of(context).size.height * 2 / 3,
             width: MediaQuery.of(context).size.width,
-            color: Colors.red,
             child: Image.file(File(widget.image.path)),
+          ),
+          Padding(
+            padding: EdgeInsets.all(40),
+            child: ElevatedButton(
+              child: Text(
+                "Click to Predict",
+                style: TextStyle(fontSize: 20.0, fontFamily: 'Abyssinica'),
+              ),
+              style: ElevatedButton.styleFrom(
+                  primary: Color(0xFE2B3F87), minimumSize: Size(300, 50)),
+              onPressed: () {
+                print("success");
+              },
+            ),
           )
         ],
       ),
