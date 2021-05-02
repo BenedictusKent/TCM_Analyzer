@@ -57,6 +57,20 @@ class _HomePageState extends State<HomePage> {
                     )),
               )
             ]),
+          ),
+
+          // "Recent"
+          Container(
+            margin: EdgeInsets.only(top: 15.0, left: 15.0),
+            width: MediaQuery.of(context).size.width,
+            child: Text(
+              "Recent",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 24.0,
+                fontFamily: 'Abyssinica',
+              ),
+            ),
           )
         ],
       ),
