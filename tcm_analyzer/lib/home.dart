@@ -186,8 +186,9 @@ class _HomePageState extends State<HomePage>
                               Icon(
                                 Icons.add_a_photo_rounded,
                                 color: Colors.white,
-                              ),
-                              () {}),
+                              ), () {
+                            Navigator.pushNamed(context, '/camera');
+                          }),
                         ),
                       ),
 
