@@ -52,9 +52,49 @@ flutter:
         - asset: fonts/AbyssinicaSIL-R.ttf
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - asset/
+    - asset/X1/
+    - asset/X2/
+    - asset/X3/
+    - asset/X4/
+    - asset/X5/
+    - asset/X6/
+    - asset/X7/
+    - asset/X8/
+    - asset/X9/
+    - asset/X10/
+    - asset/X11/
+    - asset/X12/
+    - asset/X13/
+    - asset/X14/
+    - asset/X15/
+    - asset/X16/
+    - asset/X17/
+    - asset/X18/
+    - asset/X19/
+    - asset/X20/
+    - asset/X21/
+    - asset/X22/
+    - asset/X23/
+    - asset/X24/
+    - asset/X25/
+    - asset/X26/
+    - asset/X27/
+    - asset/X28/
+    - asset/X29/
+    - asset/X30/
+    - asset/X31/
+    - asset/X32/
+    - asset/X33/
+    - asset/X34/
+    - asset/X35/
+    - asset/X36/
+    - asset/X37/
+    - asset/X38/
+    - asset/X39/
+    - asset/X40/
+    - asset/X41/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
