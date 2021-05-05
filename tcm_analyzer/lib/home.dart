@@ -197,6 +197,7 @@ class _HomePageState extends State<HomePage>
                                 Icons.add_a_photo_rounded,
                                 color: Colors.white,
                               ), () {
+                            animationController.reverse();
                             Navigator.pushNamed(context, '/camera');
                           }),
                         ),
@@ -218,8 +219,9 @@ class _HomePageState extends State<HomePage>
                               Icon(
                                 Icons.add_photo_alternate,
                                 color: Colors.white,
-                              ),
-                              () {}),
+                              ), () {
+                            animationController.reverse();
+                          }),
                         ),
                       ),
 
