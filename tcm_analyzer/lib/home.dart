@@ -38,6 +38,7 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: <Widget>[
           // app bar
@@ -79,6 +80,15 @@ class _HomePageState extends State<HomePage>
                             controller: myController,
                             decoration:
                                 InputDecoration.collapsed(hintText: "search"),
+                            onSubmitted: (value) {
+                              if (value != "") {
+                                names.removeAt(5);
+                                names.insert(0, myController.text);
+                              }
+                              myController.clear();
+                              Navigator.pushNamed(context, '/info',
+                                  arguments: names[0]);
+                            },
                           ))
                         ],
                       ),
