@@ -19,16 +19,6 @@ class ViewPage extends StatefulWidget {
 }
 
 class _ViewPageState extends State<ViewPage> {
-  Future<ui.Image> thumbnail;
-
-  Future<ui.Image> getUiImage(int height, int width) async {
-    img.Image dcd = img.decodeImage(File(widget.image.path).readAsBytesSync());
-    img.Image rsz = img.copyResize(dcd, height: height, width: width);
-    ui.Codec codec = await ui.instantiateImageCodec(img.encodePng(rsz));
-    ui.FrameInfo frameInfo = await codec.getNextFrame();
-    return frameInfo.image;
-  }
-
   File imgCropped;
   Future<File> cropImage(int height, int width) async {
     File convert = File(widget.image.path);
