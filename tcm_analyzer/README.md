@@ -2,6 +2,19 @@
 
 A new Flutter project.
 
+## TODO
+
+1. Make the prediction result page to show a list of predicted herbs.
+
+1. Make a prediction history page. It is a list of past prediction results.
+
+1. Make a list of all herbs in home page
+
+1. Add gesture in home page: swipe left to see recent search, swipe right for history page.
+
+1. Make the herb list automatically change with key pressed on search bar.
+
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
