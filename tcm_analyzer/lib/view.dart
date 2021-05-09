@@ -1,11 +1,17 @@
 import 'dart:io';
+import 'dart:async';
 import 'dart:ui' as ui;
+import 'dart:convert';
 import 'package:camera/camera.dart';
 import 'package:image_size_getter/file_input.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:image_size_getter/image_size_getter.dart' as isg;
 import 'package:image/image.dart' as img;
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
+import 'package:mime/mime.dart';
+import 'package:path/path.dart';
 
 class ViewPage extends StatefulWidget {
   final XFile image;
@@ -30,6 +36,41 @@ class _ViewPageState extends State<ViewPage> {
     File croppedFile = await FlutterNativeImage.cropImage(
         widget.image.path, x, y, width, height);
     return croppedFile;
+  }
+
+  Future<XFile> doUpload() async {
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse('https://2b6a628e7de5.ngrok.io/api/predict/test'),
+    );
+    final mimeTypeData =
+        lookupMimeType(widget.image.path, headerBytes: [0xFF, 0xD8]).split('/');
+    String imageName = basename(widget.image.path).split('.')[0];
+    print('filename: ' + imageName);
+    Map<String, String> headers = {"Content-type": "multipart/form-data"};
+    request.files.add(
+      http.MultipartFile(
+        widget.image.path,
+        File(widget.image.path).readAsBytes().asStream(),
+        File(widget.image.path).lengthSync(),
+        filename: imageName,
+        contentType: MediaType(mimeTypeData[0], mimeTypeData[1]),
+      ),
+    );
+    request.headers.addAll(headers);
+    print("request: " + request.toString());
+    try {
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+      if (response.statusCode != 200) {
+        return null;
+      }
+      print(response.body);
+      final Map<String, dynamic> responseData = json.decode(response.body);
+    } catch (e) {
+      print(e);
+      return null;
+    }
   }
 
   @override
@@ -69,7 +110,7 @@ class _ViewPageState extends State<ViewPage> {
               ),
               style: ElevatedButton.styleFrom(
                   primary: Color(0xFE2B3F87), minimumSize: Size(300, 50)),
-              onPressed: () {},
+              onPressed: doUpload,
             ),
           )
         ],

@@ -34,7 +34,10 @@ dependencies:
   image:
   flutter_native_image:
   image_size_getter:
-
+  mime:
+  http:
+  image_picker:
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
