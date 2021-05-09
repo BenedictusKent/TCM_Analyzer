@@ -12,6 +12,8 @@ import 'package:http_parser/http_parser.dart';
 import 'package:mime/mime.dart';
 import 'package:path/path.dart';
 
+bool isPressed = false;
+
 class ViewPage extends StatefulWidget {
   final XFile image;
   ViewPage({
@@ -37,17 +39,16 @@ class _ViewPageState extends State<ViewPage> {
     return croppedFile;
   }
 
-  Future<List> doUpload() async {
+  Future doUpload(context) async {
     // open a bytestream
     var stream = new http.ByteStream(imgCropped.openRead());
     var request = http.MultipartRequest(
       'POST',
-      Uri.parse('https://ecdc4ce5ddeb.ngrok.io/api/predict'),
+      Uri.parse('https://c4c3347b4c66.ngrok.io/api/predict'),
     );
     final mimeTypeData =
         lookupMimeType(widget.image.path, headerBytes: [0xFF, 0xD8]).split('/');
     String imageName = basename(widget.image.path).split('.')[0];
-    print('filename: ' + imageName);
     Map<String, String> headers = {"Content-type": "multipart/form-data"};
     request.files.add(
       http.MultipartFile.fromBytes(
@@ -58,15 +59,14 @@ class _ViewPageState extends State<ViewPage> {
       ),
     );
     request.headers.addAll(headers);
-    print("request: " + request.toString());
     try {
       final streamedResponse = await request.send();
       final response = await http.Response.fromStream(streamedResponse);
       if (response.statusCode != 200) {
         return null;
       }
-      print(response.body);
       final Map<String, dynamic> responseData = json.decode(response.body);
+      Navigator.pushNamed(context, '/result', arguments: responseData);
     } catch (e) {
       print(e);
       return null;
@@ -104,13 +104,19 @@ class _ViewPageState extends State<ViewPage> {
           Padding(
             padding: EdgeInsets.all(40),
             child: ElevatedButton(
-              child: Text(
+              child: isPressed ? Text(
+                "Predicting ...",
+                style: TextStyle(fontSize: 20.0, fontFamily: 'Abyssinica'),
+              ):Text(
                 "Click to Predict",
                 style: TextStyle(fontSize: 20.0, fontFamily: 'Abyssinica'),
               ),
               style: ElevatedButton.styleFrom(
                   primary: Color(0xFE2B3F87), minimumSize: Size(300, 50)),
-              onPressed: doUpload,
+              onPressed: isPressed ? () => {} : () =>  {
+                setState(() => isPressed = !isPressed),
+                doUpload(context),
+              },
             ),
           )
         ],
@@ -118,3 +124,4 @@ class _ViewPageState extends State<ViewPage> {
     );
   }
 }
+
