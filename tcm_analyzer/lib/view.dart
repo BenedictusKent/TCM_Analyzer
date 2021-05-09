@@ -67,6 +67,7 @@ class _ViewPageState extends State<ViewPage> {
       }
       final Map<String, dynamic> responseData = json.decode(response.body);
       Navigator.pushNamed(context, '/result', arguments: responseData);
+      setState(() => isPressed = false);
     } catch (e) {
       print(e);
       return null;
@@ -76,6 +77,7 @@ class _ViewPageState extends State<ViewPage> {
   @override
   void initState() {
     // TODO: implement initState
+    setState(() => isPressed = false);
     super.initState();
     cropImage(395, 395).then((value) {
       setState(() {
@@ -86,6 +88,7 @@ class _ViewPageState extends State<ViewPage> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text("View Page"),
@@ -104,19 +107,25 @@ class _ViewPageState extends State<ViewPage> {
           Padding(
             padding: EdgeInsets.all(40),
             child: ElevatedButton(
-              child: isPressed ? Text(
-                "Predicting ...",
-                style: TextStyle(fontSize: 20.0, fontFamily: 'Abyssinica'),
-              ):Text(
-                "Click to Predict",
-                style: TextStyle(fontSize: 20.0, fontFamily: 'Abyssinica'),
-              ),
+              child: isPressed
+                  ? Text(
+                      "Predicting ...",
+                      style:
+                          TextStyle(fontSize: 20.0, fontFamily: 'Abyssinica'),
+                    )
+                  : Text(
+                      "Click to Predict",
+                      style:
+                          TextStyle(fontSize: 20.0, fontFamily: 'Abyssinica'),
+                    ),
               style: ElevatedButton.styleFrom(
                   primary: Color(0xFE2B3F87), minimumSize: Size(300, 50)),
-              onPressed: isPressed ? () => {} : () =>  {
-                setState(() => isPressed = !isPressed),
-                doUpload(context),
-              },
+              onPressed: isPressed
+                  ? null
+                  : () => {
+                        setState(() => isPressed = !isPressed),
+                        doUpload(context),
+                      },
             ),
           )
         ],
@@ -124,4 +133,3 @@ class _ViewPageState extends State<ViewPage> {
     );
   }
 }
-

@@ -3,6 +3,7 @@ import 'package:tcm_analyzer/home.dart';
 import 'package:tcm_analyzer/info.dart';
 import 'package:tcm_analyzer/camera.dart';
 import 'package:tcm_analyzer/view.dart';
+import 'package:tcm_analyzer/result.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -16,6 +17,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => CameraScreen());
       case '/view':
         return MaterialPageRoute(builder: (_) => ViewPage(image: args));
+      case '/result':
+        return MaterialPageRoute(builder: (_) => ResultPage(responseData: args));
       default:
         return _errorRoute();
     }
