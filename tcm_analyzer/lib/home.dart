@@ -1,4 +1,7 @@
+import 'dart:io';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -10,14 +13,24 @@ class _HomePageState extends State<HomePage>
   // declaration
   final myController = TextEditingController();
   List<String> names = ["寧夏枸杞", "熟地黃", "黨參", "甘草", "懷牛膝", "麥門冬"];
+  XFile image;
   AnimationController animationController;
   Animation translation;
   Animation rotation;
   Animation otherrotation;
 
+  // functions
   double getRadians(double degree) {
     double radian = 57.2958;
     return degree / radian;
+  }
+
+  Future pickImage(ImageSource imageSource) async {
+    PickedFile img = await ImagePicker().getImage(source: imageSource);
+    if (img != null) {
+      image = XFile(img.path);
+      Navigator.pushNamed(context, '/view', arguments: image);
+    }
   }
 
   @override
@@ -221,6 +234,7 @@ class _HomePageState extends State<HomePage>
                                 color: Colors.white,
                               ), () {
                             animationController.reverse();
+                            pickImage(ImageSource.gallery);
                           }),
                         ),
                       ),
