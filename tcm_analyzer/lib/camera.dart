@@ -59,8 +59,8 @@ class _CameraScreenState extends State<CameraScreen> {
                   child: _cameraPreviewWidget(),
                 ),
                 Container(
-                  width: 400,
-                  height: 400,
+                  width: 205,
+                  height: 205,
                   decoration: BoxDecoration(
                     border: Border.all(
                         color: Colors.white,
