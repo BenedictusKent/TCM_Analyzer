@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:async';
-import 'dart:ui' as ui;
 import 'dart:convert';
 import 'package:camera/camera.dart';
 import 'package:image_size_getter/file_input.dart';
