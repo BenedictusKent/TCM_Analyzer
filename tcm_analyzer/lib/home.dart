@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:unicorndial/unicorndial.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -50,19 +51,48 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
+    List<UnicornButton> childButtons = [];
+
+    childButtons.add(UnicornButton(
+        hasLabel: true,
+        labelText: "Camera",
+        currentButton: FloatingActionButton(
+          heroTag: "Camera",
+          backgroundColor: Colors.red,
+          mini: true,
+          child: Icon(Icons.add_a_photo_rounded),
+          onPressed: () {
+            Navigator.pushNamed(context, '/camera');
+          },
+        )));
+
+    childButtons.add(UnicornButton(
+        hasLabel: true,
+        labelText: "Gallery",
+        currentButton: FloatingActionButton(
+            heroTag: "Gallery",
+            backgroundColor: Colors.orange,
+            mini: true,
+            child: Icon(Icons.add_photo_alternate),
+            onPressed: () {
+              pickImage(ImageSource.gallery);
+            },
+        )));
+
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(
         children: <Widget>[
           // app bar
           Container(
-            height: 180.0,
+            height: 160.0,
             width: MediaQuery.of(context).size.width,
             color: Color(0xFE2B3F87),
             child: Column(children: <Widget>[
               // title
               Container(
-                  padding: EdgeInsets.fromLTRB(0, 80, 190, 10),
+                  padding: EdgeInsets.fromLTRB(0, 50, 180, 20),
                   child: Text(
                     "TCM Analyzer",
                     style: TextStyle(
@@ -110,162 +140,89 @@ class _HomePageState extends State<HomePage>
             ]),
           ),
 
-          // "Recent"
-          Container(
-            margin: EdgeInsets.only(top: 15.0, left: 15.0),
-            width: MediaQuery.of(context).size.width,
-            child: Text(
-              "Recent",
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 24.0,
-                fontFamily: 'Abyssinica',
-              ),
-            ),
-          ),
+          Expanded(
+            flex: 1,
+            child: PageView(children: <Widget>[
+              Container (
+                child: Stack(
+                  children: <Widget>[
+                    // "Recent"
+                    Container(
+                      margin: EdgeInsets.only(top: 15.0, left: 15.0),
+                      width: MediaQuery.of(context).size.width,
+                      child: Text(
+                        "Recent",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 24.0,
+                          fontFamily: 'Abyssinica',
+                        ),
+                      ),
+                    ),
 
-          // Recent searches (first)
-          Container(
-            margin: EdgeInsets.only(top: 10.0, left: 10.0),
-            height: 38.0,
-            width: MediaQuery.of(context).size.width,
-            child: TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/info', arguments: names[0]);
-              },
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(names[0],
-                    style: TextStyle(
-                        color: Colors.black.withOpacity(0.5),
-                        fontSize: 18.0,
-                        fontFamily: 'Abyssinica')),
-              ),
-            ),
-          ),
-
-          // Recent searches (second to end)
-          Container(
-            height: 190.0,
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              children: <Widget>[
-                for (int i = 1; i < 6; ++i)
-                  Container(
-                      margin: EdgeInsets.only(left: 10.0),
+                    // Recent searches (first)
+                    Container(
+                      margin: EdgeInsets.only(top: 50.0, left: 10.0),
                       height: 38.0,
                       width: MediaQuery.of(context).size.width,
                       child: TextButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, '/info',
-                              arguments: names[i]);
+                          Navigator.pushNamed(context, '/info', arguments: names[0]);
                         },
                         child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(names[i],
-                                style: TextStyle(
-                                    color: Colors.black.withOpacity(0.5),
-                                    fontSize: 18.0,
-                                    fontFamily: 'Abyssinica'))),
-                      ))
-              ],
-            ),
-          ),
-
-          // Custom FAB
-          Container(
-            height: MediaQuery.of(context).size.height - 488,
-            width: MediaQuery.of(context).size.width,
-            child: Stack(
-              children: <Widget>[
-                Positioned(
-                  right: 20.0,
-                  bottom: 10.0,
-                  child: Stack(
-                    alignment: Alignment.bottomRight,
-                    children: <Widget>[
-                      // tap box
-                      IgnorePointer(
-                        child: Container(
-                          color: Colors.transparent,
-                          height: 160.0,
-                          width: 170.0,
+                          alignment: Alignment.centerLeft,
+                          child: Text(names[0],
+                              style: TextStyle(
+                                  color: Colors.black.withOpacity(0.5),
+                                  fontSize: 18.0,
+                                  fontFamily: 'Abyssinica')),
                         ),
                       ),
+                    ),
 
-                      // add image from camera
-                      Transform.translate(
-                        offset: Offset.fromDirection(
-                            getRadians(270), translation.value * 90),
-                        child: Transform(
-                          transform:
-                              Matrix4.rotationZ(getRadians(rotation.value))
-                                ..scale(translation.value),
-                          alignment: Alignment.center,
-                          child: CircularButton(
-                              Colors.red,
-                              60,
-                              50,
-                              Icon(
-                                Icons.add_a_photo_rounded,
-                                color: Colors.white,
-                              ), () {
-                            animationController.reverse();
-                            Navigator.pushNamed(context, '/camera');
-                          }),
-                        ),
+                    // Recent searches (second to end)
+                    Container(
+                      height: 190.0,
+                      margin: EdgeInsets.only(top: 90.0),
+                      width: MediaQuery.of(context).size.width,
+                      child: Column(
+                        children: <Widget>[
+                          for (int i = 1; i < 6; ++i)
+                            Container(
+                                margin: EdgeInsets.only(left: 10.0),
+                                height: 38.0,
+                                width: MediaQuery.of(context).size.width,
+                                child: TextButton(
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, '/info',
+                                        arguments: names[i]);
+                                  },
+                                  child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(names[i],
+                                          style: TextStyle(
+                                              color: Colors.black.withOpacity(0.5),
+                                              fontSize: 18.0,
+                                              fontFamily: 'Abyssinica'))),
+                                ))
+                        ],
                       ),
-
-                      // add image from gallery
-                      Transform.translate(
-                        offset: Offset.fromDirection(
-                            getRadians(180), translation.value * 90),
-                        child: Transform(
-                          transform:
-                              Matrix4.rotationZ(getRadians(rotation.value))
-                                ..scale(translation.value),
-                          alignment: Alignment.center,
-                          child: CircularButton(
-                              Colors.orange,
-                              60,
-                              50,
-                              Icon(
-                                Icons.add_photo_alternate,
-                                color: Colors.white,
-                              ), () {
-                            animationController.reverse();
-                            pickImage(ImageSource.gallery);
-                          }),
-                        ),
-                      ),
-
-                      // plus icon button
-                      Transform(
-                        transform:
-                            Matrix4.rotationZ(getRadians(otherrotation.value)),
-                        alignment: Alignment.center,
-                        child: CircularButton(
-                            Color(0xFE2B3F87),
-                            60,
-                            50,
-                            Icon(
-                              Icons.add,
-                              color: Colors.white,
-                            ), () {
-                          if (animationController.isCompleted)
-                            animationController.reverse();
-                          else
-                            animationController.forward();
-                        }),
-                      )
-                    ],
-                  ),
+                    ),
+                  ],
                 )
-              ],
-            ),
-          )
-        ],
+              ),
+              Container(color: Colors.red,),
+              Container(color: Colors.blue),
+            ]),
+          ),
+        ]
       ),
+      floatingActionButton: UnicornDialer(
+            backgroundColor: Color.fromRGBO(255, 255, 255, 0),
+            parentButtonBackground: Colors.blue[900],
+            orientation: UnicornOrientation.VERTICAL,
+            parentButton: Icon(Icons.add),
+            childButtons: childButtons)
     );
   }
 }

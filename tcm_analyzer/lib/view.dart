@@ -40,7 +40,6 @@ class _ViewPageState extends State<ViewPage> {
 
   Future doUpload(context) async {
     // open a bytestream
-    var stream = new http.ByteStream(imgCropped.openRead());
     var request = http.MultipartRequest(
       'POST',
       Uri.parse('https://c4c3347b4c66.ngrok.io/api/predict'),
