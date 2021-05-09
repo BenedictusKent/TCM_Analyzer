@@ -1,0 +1,5 @@
+venv/
+.vscode/
+__pycache__/
+yolov5m6_saved_model/
+model/

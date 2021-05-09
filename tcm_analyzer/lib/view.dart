@@ -6,7 +6,6 @@ import 'package:camera/camera.dart';
 import 'package:image_size_getter/file_input.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:image_size_getter/image_size_getter.dart' as isg;
-import 'package:image/image.dart' as img;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
@@ -38,10 +37,12 @@ class _ViewPageState extends State<ViewPage> {
     return croppedFile;
   }
 
-  Future<XFile> doUpload() async {
+  Future<List> doUpload() async {
+    // open a bytestream
+    var stream = new http.ByteStream(imgCropped.openRead());
     var request = http.MultipartRequest(
       'POST',
-      Uri.parse('https://2b6a628e7de5.ngrok.io/api/predict/test'),
+      Uri.parse('https://ecdc4ce5ddeb.ngrok.io/api/predict'),
     );
     final mimeTypeData =
         lookupMimeType(widget.image.path, headerBytes: [0xFF, 0xD8]).split('/');
@@ -49,10 +50,9 @@ class _ViewPageState extends State<ViewPage> {
     print('filename: ' + imageName);
     Map<String, String> headers = {"Content-type": "multipart/form-data"};
     request.files.add(
-      http.MultipartFile(
-        widget.image.path,
-        File(widget.image.path).readAsBytes().asStream(),
-        File(widget.image.path).lengthSync(),
+      http.MultipartFile.fromBytes(
+        'image',
+        File(imgCropped.path).readAsBytesSync(),
         filename: imageName,
         contentType: MediaType(mimeTypeData[0], mimeTypeData[1]),
       ),
