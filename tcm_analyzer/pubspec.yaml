@@ -31,6 +31,9 @@ dependencies:
   camera:
   path_provider:
   path:
+  image:
+  flutter_native_image:
+  image_size_getter:
 
 dev_dependencies:
   flutter_test:
