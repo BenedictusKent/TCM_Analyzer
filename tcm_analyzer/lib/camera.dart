@@ -75,7 +75,7 @@ class _CameraScreenState extends State<CameraScreen> {
             Container(
               height: (MediaQuery.of(context).size.height -
                       appBar.preferredSize.height) *
-                  1.19 /
+                  1.18 /
                   8,
               width: MediaQuery.of(context).size.width,
               alignment: Alignment.center,
