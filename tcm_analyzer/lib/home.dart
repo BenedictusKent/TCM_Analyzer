@@ -70,20 +70,18 @@ class _HomePageState extends State<HomePage>
         hasLabel: true,
         labelText: "Gallery",
         currentButton: FloatingActionButton(
-            heroTag: "Gallery",
-            backgroundColor: Colors.orange,
-            mini: true,
-            child: Icon(Icons.add_photo_alternate),
-            onPressed: () {
-              pickImage(ImageSource.gallery);
-            },
+          heroTag: "Gallery",
+          backgroundColor: Colors.orange,
+          mini: true,
+          child: Icon(Icons.add_photo_alternate),
+          onPressed: () {
+            pickImage(ImageSource.gallery);
+          },
         )));
 
-
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Column(
-        children: <Widget>[
+        resizeToAvoidBottomInset: false,
+        body: Column(children: <Widget>[
           // app bar
           Container(
             height: 160.0,
@@ -92,7 +90,7 @@ class _HomePageState extends State<HomePage>
             child: Column(children: <Widget>[
               // title
               Container(
-                  padding: EdgeInsets.fromLTRB(0, 50, 180, 20),
+                  padding: EdgeInsets.fromLTRB(10, 50, 180, 20),
                   child: Text(
                     "TCM Analyzer",
                     style: TextStyle(
@@ -143,87 +141,88 @@ class _HomePageState extends State<HomePage>
           Expanded(
             flex: 1,
             child: PageView(children: <Widget>[
-              Container (
-                child: Stack(
-                  children: <Widget>[
-                    // "Recent"
-                    Container(
-                      margin: EdgeInsets.only(top: 15.0, left: 15.0),
-                      width: MediaQuery.of(context).size.width,
-                      child: Text(
-                        "Recent",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 24.0,
-                          fontFamily: 'Abyssinica',
-                        ),
+              Container(
+                  child: Stack(
+                children: <Widget>[
+                  // "Recent"
+                  Container(
+                    margin: EdgeInsets.only(top: 15.0, left: 15.0),
+                    width: MediaQuery.of(context).size.width,
+                    child: Text(
+                      "Recent",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 24.0,
+                        fontFamily: 'Abyssinica',
                       ),
                     ),
+                  ),
 
-                    // Recent searches (first)
-                    Container(
-                      margin: EdgeInsets.only(top: 50.0, left: 10.0),
-                      height: 38.0,
-                      width: MediaQuery.of(context).size.width,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/info', arguments: names[0]);
-                        },
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(names[0],
-                              style: TextStyle(
-                                  color: Colors.black.withOpacity(0.5),
-                                  fontSize: 18.0,
-                                  fontFamily: 'Abyssinica')),
-                        ),
+                  // Recent searches (first)
+                  Container(
+                    margin: EdgeInsets.only(top: 50.0, left: 10.0),
+                    height: 38.0,
+                    width: MediaQuery.of(context).size.width,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/info',
+                            arguments: names[0]);
+                      },
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(names[0],
+                            style: TextStyle(
+                                color: Colors.black.withOpacity(0.5),
+                                fontSize: 18.0,
+                                fontFamily: 'Abyssinica')),
                       ),
                     ),
+                  ),
 
-                    // Recent searches (second to end)
-                    Container(
-                      height: 190.0,
-                      margin: EdgeInsets.only(top: 90.0),
-                      width: MediaQuery.of(context).size.width,
-                      child: Column(
-                        children: <Widget>[
-                          for (int i = 1; i < 6; ++i)
-                            Container(
-                                margin: EdgeInsets.only(left: 10.0),
-                                height: 38.0,
-                                width: MediaQuery.of(context).size.width,
-                                child: TextButton(
-                                  onPressed: () {
-                                    Navigator.pushNamed(context, '/info',
-                                        arguments: names[i]);
-                                  },
-                                  child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(names[i],
-                                          style: TextStyle(
-                                              color: Colors.black.withOpacity(0.5),
-                                              fontSize: 18.0,
-                                              fontFamily: 'Abyssinica'))),
-                                ))
-                        ],
-                      ),
+                  // Recent searches (second to end)
+                  Container(
+                    height: 190.0,
+                    margin: EdgeInsets.only(top: 90.0),
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      children: <Widget>[
+                        for (int i = 1; i < 6; ++i)
+                          Container(
+                              margin: EdgeInsets.only(left: 10.0),
+                              height: 38.0,
+                              width: MediaQuery.of(context).size.width,
+                              child: TextButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/info',
+                                      arguments: names[i]);
+                                },
+                                child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(names[i],
+                                        style: TextStyle(
+                                            color:
+                                                Colors.black.withOpacity(0.5),
+                                            fontSize: 18.0,
+                                            fontFamily: 'Abyssinica'))),
+                              ))
+                      ],
                     ),
-                  ],
-                )
+                  ),
+                ],
+              )),
+              Container(
+                color: Colors.red,
               ),
-              Container(color: Colors.red,),
               Container(color: Colors.blue),
             ]),
           ),
-        ]
-      ),
-      floatingActionButton: UnicornDialer(
+        ]),
+        floatingActionButton: UnicornDialer(
             backgroundColor: Color.fromRGBO(255, 255, 255, 0),
             parentButtonBackground: Colors.blue[900],
             orientation: UnicornOrientation.VERTICAL,
             parentButton: Icon(Icons.add),
-            childButtons: childButtons)
-    );
+            childButtons: childButtons));
   }
 }
 

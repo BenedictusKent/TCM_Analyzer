@@ -615,7 +615,7 @@ class _InfoPageState extends State<InfoPage> {
 
           // Info
           Container(
-            height: MediaQuery.of(context).size.height - 60 - 200 - 20,
+            height: MediaQuery.of(context).size.height - 70 - 200 - 20,
             width: MediaQuery.of(context).size.width,
             child: Container(
               padding: EdgeInsets.all(20.0),
