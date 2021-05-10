@@ -42,7 +42,7 @@ class _ViewPageState extends State<ViewPage> {
     // open a bytestream
     var request = http.MultipartRequest(
       'POST',
-      Uri.parse('https://c4c3347b4c66.ngrok.io/api/predict'),
+      Uri.parse('https://aa69077ad964.ngrok.io/api/predict'),
     );
     final mimeTypeData =
         lookupMimeType(widget.image.path, headerBytes: [0xFF, 0xD8]).split('/');
@@ -63,7 +63,7 @@ class _ViewPageState extends State<ViewPage> {
       if (response.statusCode != 200) {
         return null;
       }
-      final Map<String, dynamic> responseData = json.decode(response.body);
+      final List responseData = json.decode(response.body)['class'];
       Navigator.pushNamed(context, '/result', arguments: responseData);
       setState(() => isPressed = false);
     } catch (e) {
@@ -118,12 +118,10 @@ class _ViewPageState extends State<ViewPage> {
                     ),
               style: ElevatedButton.styleFrom(
                   primary: Color(0xFE2B3F87), minimumSize: Size(300, 50)),
-              onPressed: isPressed
-                  ? null
-                  : () => {
-                        setState(() => isPressed = !isPressed),
-                        doUpload(context),
-                      },
+              onPressed: isPressed ? null : () => {
+                setState(() => isPressed = !isPressed),
+                doUpload(context),
+              },
             ),
           )
         ],

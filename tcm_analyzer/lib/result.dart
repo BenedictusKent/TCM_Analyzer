@@ -13,7 +13,7 @@ import 'package:mime/mime.dart';
 import 'package:path/path.dart';
 
 class ResultPage extends StatefulWidget {
-  final Map<String, dynamic> responseData;
+  final List responseData;
   ResultPage({
     Key key,
     @required this.responseData,
@@ -24,7 +24,6 @@ class ResultPage extends StatefulWidget {
 }
 
 class _ResultPageState extends State<ResultPage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +31,20 @@ class _ResultPageState extends State<ResultPage> {
         title: Text("Prediction Result"),
         backgroundColor: Color(0xFE2B3F87),
       ),
-      
+      body: Column(
+        children: <Widget>[
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: widget.responseData.length,
+            itemBuilder: (context, index) {
+              final item = widget.responseData[index];
+              return ListTile(
+                title: Text(item),
+              );
+            },
+          )
+        ],
+      ),
     );
   }
 }
