@@ -19,7 +19,7 @@ THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 
 # Yolo v5
 IMAGE_SIZE = 512
-conf_thres = 0.5
+conf_thres = 0.8
 stride = 32
 device = select_device('')
 
