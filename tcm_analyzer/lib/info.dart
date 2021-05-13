@@ -543,31 +543,36 @@ class _InfoPageState extends State<InfoPage> {
 
   // Widget to put image
   Widget pickImage(bool status, String path, String number) {
-    double v;
-    if (number == '1')
-      v = 20.0;
-    else
-      v = 0.0;
     if (status) {
-      return Container(
-        margin: EdgeInsets.only(left: v, right: 10.0),
-        height: 180.0,
-        width: 180.0,
-        decoration: BoxDecoration(
-            border: Border.all(color: Colors.black),
-            image: DecorationImage(
-                image: AssetImage("asset/$path/$number.jpg"),
-                fit: BoxFit.fill)),
+      return Expanded (
+        child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Container(
+          alignment: Alignment.center,
+          height: 180.0,
+          width: 180.0,
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.black),
+              image: DecorationImage(
+                  image: AssetImage("asset/$path/$number.jpg"),
+                  fit: BoxFit.fill)),
+          ),
+        ),
       );
     } else {
-      return Container(
-        margin: EdgeInsets.only(left: v, right: 10.0),
-        height: 180.0,
-        width: 180.0,
-        decoration: BoxDecoration(
-            border: Border.all(color: Colors.black),
-            image: DecorationImage(
-                image: AssetImage("asset/no-camera.png"), fit: BoxFit.fill)),
+      return Expanded (
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Container(
+          alignment: Alignment.center,
+          height: 180.0,
+          width: 180.0,
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.black),
+              image: DecorationImage(
+                  image: AssetImage("asset/no-camera.png"), fit: BoxFit.fill)),
+          ),
+        ),
       );
     }
   }
