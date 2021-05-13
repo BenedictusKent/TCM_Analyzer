@@ -12,6 +12,7 @@ import 'package:mime/mime.dart';
 import 'package:path/path.dart';
 
 bool isPressed = false;
+bool isCropped = false;
 
 class ViewPage extends StatefulWidget {
   final XFile image;
@@ -40,7 +41,6 @@ class _ViewPageState extends State<ViewPage> {
       y = ((high / 2) - (height / 2)).round();
     else
       y = 500;
-    print("image view ${x}, ${y}");
     File croppedFile = await FlutterNativeImage.cropImage(
         widget.image.path, x, y, width, height);
     return croppedFile;
@@ -109,30 +109,50 @@ class _ViewPageState extends State<ViewPage> {
                 ? Image.file(File(imgCropped.path))
                 : Text("It's null..."),
           ),
-          Padding(
-            padding: EdgeInsets.all(40),
-            child: ElevatedButton(
-              child: isPressed
-                  ? Text(
-                      "Predicting ...",
-                      style:
-                          TextStyle(fontSize: 20.0, fontFamily: 'Abyssinica'),
-                    )
-                  : Text(
-                      "Click to Predict",
-                      style:
-                          TextStyle(fontSize: 20.0, fontFamily: 'Abyssinica'),
-                    ),
-              style: ElevatedButton.styleFrom(
-                  primary: Color(0xFE2B3F87), minimumSize: Size(300, 50)),
-              onPressed: isPressed
-                  ? null
-                  : () => {
-                        setState(() => isPressed = !isPressed),
-                        doUpload(context),
-                      },
-            ),
-          )
+          Row(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(left: 25),
+                child: ElevatedButton(
+                  child: isPressed
+                      ? Text(
+                          "Predicting ... ",
+                          style: TextStyle(
+                              fontSize: 20.0, fontFamily: 'Abyssinica'),
+                        )
+                      : Text(
+                          "Click to Predict",
+                          style: TextStyle(
+                              fontSize: 18.0, fontFamily: 'Abyssinica'),
+                        ),
+                  style: ElevatedButton.styleFrom(
+                      primary: Color(0xFE2B3F87), minimumSize: Size(150, 50)),
+                  onPressed: isPressed
+                      ? null
+                      : () => {
+                            setState(() => isPressed = !isPressed),
+                            doUpload(context),
+                          },
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 22),
+                child: ElevatedButton(
+                  child: Text(
+                    "Recrop Image",
+                    style: TextStyle(fontSize: 20.5, fontFamily: 'Abyssinica'),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                      primary: Color(0xFE2B3F87), minimumSize: Size(150, 50)),
+                  onPressed: isPressed
+                      ? null
+                      : () => {
+                            // implement crop plugin
+                          },
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
