@@ -13,7 +13,7 @@ from tensorflow.keras.models import load_model
 
 app = FastAPI()
 client_session = aiohttp.ClientSession() # Start client session
-weights = '../serving/yolov5s_herb_saved_model'
+weights = '../serving/yolov5s_herb2_saved_model'
 herb_model = load_model(weights)
 
 def results_to_json(results, model):
@@ -51,12 +51,3 @@ async def predict_image(request: Request):
     }
     print("Got predicted data in ---" + str(time.time() - start_time) + "seconds ---")
     return JSONResponse(content=result_response)
-
-@app.post("/api/predict/test")
-async def process_home_form(request: Request):
-    image = await request.form()
-    model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
-    results = model( Image.open(BytesIO(await image.read())))
-    json_results = results_to_json(results)
-
-    return json_results
