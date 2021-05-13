@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
 import 'package:camera/camera.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_size_getter/file_input.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:image_size_getter/image_size_getter.dart' as isg;
@@ -80,6 +81,28 @@ class _ViewPageState extends State<ViewPage> {
     }
   }
 
+  void recropImage() async {
+    File image = File(widget.image.path);
+    File cropped = await ImageCropper.cropImage(
+      sourcePath: image.path,
+      aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
+      maxHeight: 500,
+      maxWidth: 500,
+      androidUiSettings: AndroidUiSettings(
+        toolbarColor: Color(0xFE2B3F87),
+        toolbarTitle: "Recrop Image",
+        statusBarColor: Color(0xFE2B3F87),
+        backgroundColor: Colors.black,
+        hideBottomControls: true,
+      ),
+    );
+    if (cropped != null) {
+      setState(() {
+        imgCropped = cropped;
+      });
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -147,7 +170,7 @@ class _ViewPageState extends State<ViewPage> {
                   onPressed: isPressed
                       ? null
                       : () => {
-                            // implement crop plugin
+                            recropImage(),
                           },
                 ),
               ),
