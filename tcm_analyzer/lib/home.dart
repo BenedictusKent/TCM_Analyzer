@@ -212,7 +212,7 @@ class _HomePageState extends State<HomePage>
                 ],
               )),
               SingleChildScrollView(
-                physics: ScrollPhysics(),
+                physics: BouncingScrollPhysics(),
                 child: Column(children: <Widget>[
                     ListView.builder(
                       shrinkWrap: true,
