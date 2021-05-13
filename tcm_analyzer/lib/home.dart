@@ -221,7 +221,12 @@ class _HomePageState extends State<HomePage>
                       itemCount: herbClass.length,
                       itemBuilder: (context, index) {
                         final item = herbClass[index];
-                        return Container(
+                        return GestureDetector(
+                          onTap: (){
+                            Navigator.pushNamed(context, '/info',
+                            arguments: item["engName"]);
+                          },
+                          child: Container(
                           height: 120,
                           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                           decoration: BoxDecoration(
@@ -265,6 +270,7 @@ class _HomePageState extends State<HomePage>
                               ],
                             ),
                           )
+                        )
                         );
                       },
                     )
