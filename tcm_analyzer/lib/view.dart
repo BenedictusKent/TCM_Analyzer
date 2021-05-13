@@ -121,6 +121,15 @@ class _ViewPageState extends State<ViewPage> {
       appBar: AppBar(
         title: Text("View Page"),
         backgroundColor: Color(0xFE2B3F87),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: Column(
         children: <Widget>[
