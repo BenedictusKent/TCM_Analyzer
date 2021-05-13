@@ -3,6 +3,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:unicorndial/unicorndial.dart';
+import 'package:tcm_analyzer/classes.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -33,6 +34,7 @@ class _HomePageState extends State<HomePage>
       Navigator.pushNamed(context, '/view', arguments: image);
     }
   }
+
 
   @override
   void initState() {
@@ -210,8 +212,64 @@ class _HomePageState extends State<HomePage>
                   ),
                 ],
               )),
-              Container(
-                color: Colors.red,
+              SingleChildScrollView(
+                physics: ScrollPhysics(),
+                child: Column(children: <Widget>[
+                    ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: herbClass.length,
+                      itemBuilder: (context, index) {
+                        final item = herbClass[index];
+                        return Container(
+                          height: 120,
+                          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0),
+                              ]),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Image.asset(
+                                  item["thumbnail"],
+                                  height: 100,
+                                  width: 100
+                                ),
+                                Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 10
+                                )
+                                ),
+                                Expanded(
+                                 child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      item["engName"],
+                                      style: const TextStyle(
+                                          fontSize: 20, fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      item["cnName"],
+                                      style: const TextStyle(
+                                          fontSize: 20, fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                )
+                                ),
+                              ],
+                            ),
+                          )
+                        );
+                      },
+                    )
+                ]),
               ),
               Container(color: Colors.blue),
             ]),
