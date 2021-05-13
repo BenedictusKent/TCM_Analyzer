@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
 import 'package:camera/camera.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_size_getter/file_input.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:image_size_getter/image_size_getter.dart' as isg;
@@ -12,6 +13,7 @@ import 'package:mime/mime.dart';
 import 'package:path/path.dart';
 
 bool isPressed = false;
+bool isCropped = false;
 
 class ViewPage extends StatefulWidget {
   final XFile image;
@@ -40,7 +42,6 @@ class _ViewPageState extends State<ViewPage> {
       y = ((high / 2) - (height / 2)).round();
     else
       y = 500;
-    print("image view ${x}, ${y}");
     File croppedFile = await FlutterNativeImage.cropImage(
         widget.image.path, x, y, width, height);
     return croppedFile;
@@ -80,6 +81,28 @@ class _ViewPageState extends State<ViewPage> {
     }
   }
 
+  void recropImage() async {
+    File image = File(widget.image.path);
+    File cropped = await ImageCropper.cropImage(
+      sourcePath: image.path,
+      aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
+      maxHeight: 500,
+      maxWidth: 500,
+      androidUiSettings: AndroidUiSettings(
+        toolbarColor: Color(0xFE2B3F87),
+        toolbarTitle: "Recrop Image",
+        statusBarColor: Color(0xFE2B3F87),
+        backgroundColor: Colors.black,
+        hideBottomControls: true,
+      ),
+    );
+    if (cropped != null) {
+      setState(() {
+        imgCropped = cropped;
+      });
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -109,30 +132,50 @@ class _ViewPageState extends State<ViewPage> {
                 ? Image.file(File(imgCropped.path))
                 : Text("It's null..."),
           ),
-          Padding(
-            padding: EdgeInsets.all(40),
-            child: ElevatedButton(
-              child: isPressed
-                  ? Text(
-                      "Predicting ...",
-                      style:
-                          TextStyle(fontSize: 20.0, fontFamily: 'Abyssinica'),
-                    )
-                  : Text(
-                      "Click to Predict",
-                      style:
-                          TextStyle(fontSize: 20.0, fontFamily: 'Abyssinica'),
-                    ),
-              style: ElevatedButton.styleFrom(
-                  primary: Color(0xFE2B3F87), minimumSize: Size(300, 50)),
-              onPressed: isPressed
-                  ? null
-                  : () => {
-                        setState(() => isPressed = !isPressed),
-                        doUpload(context),
-                      },
-            ),
-          )
+          Row(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(left: 25),
+                child: ElevatedButton(
+                  child: isPressed
+                      ? Text(
+                          "Predicting ... ",
+                          style: TextStyle(
+                              fontSize: 20.0, fontFamily: 'Abyssinica'),
+                        )
+                      : Text(
+                          "Click to Predict",
+                          style: TextStyle(
+                              fontSize: 18.0, fontFamily: 'Abyssinica'),
+                        ),
+                  style: ElevatedButton.styleFrom(
+                      primary: Color(0xFE2B3F87), minimumSize: Size(150, 50)),
+                  onPressed: isPressed
+                      ? null
+                      : () => {
+                            setState(() => isPressed = !isPressed),
+                            doUpload(context),
+                          },
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 22),
+                child: ElevatedButton(
+                  child: Text(
+                    "Recrop Image",
+                    style: TextStyle(fontSize: 20.5, fontFamily: 'Abyssinica'),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                      primary: Color(0xFE2B3F87), minimumSize: Size(150, 50)),
+                  onPressed: isPressed
+                      ? null
+                      : () => {
+                            recropImage(),
+                          },
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );

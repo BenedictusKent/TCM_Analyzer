@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -163,7 +162,7 @@ class _HomePageState extends State<HomePage>
                   // Recent searches (first)
                   Container(
                     margin: EdgeInsets.only(top: 50.0, left: 10.0),
-                    height: 38.0,
+                    height: 40.0,
                     width: MediaQuery.of(context).size.width,
                     child: TextButton(
                       onPressed: () {
@@ -183,7 +182,7 @@ class _HomePageState extends State<HomePage>
 
                   // Recent searches (second to end)
                   Container(
-                    height: 190.0,
+                    height: 200.0,
                     margin: EdgeInsets.only(top: 90.0),
                     width: MediaQuery.of(context).size.width,
                     child: Column(
@@ -191,7 +190,7 @@ class _HomePageState extends State<HomePage>
                         for (int i = 1; i < 6; ++i)
                           Container(
                               margin: EdgeInsets.only(left: 10.0),
-                              height: 38.0,
+                              height: 39.0,
                               width: MediaQuery.of(context).size.width,
                               child: TextButton(
                                 onPressed: () {
