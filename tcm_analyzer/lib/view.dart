@@ -31,8 +31,16 @@ class _ViewPageState extends State<ViewPage> {
     var dim = isg.ImageSizeGetter.getSize(FileInput(convert));
     var high = dim.height;
     var wide = dim.width;
-    int x = ((wide / 2) - (width / 2)).round();
-    int y = ((high / 2) - (height / 2)).round();
+    int x, y;
+    if (wide != 0)
+      x = ((wide / 2) - (width / 2)).round();
+    else
+      x = 500;
+    if (high != 0)
+      y = ((high / 2) - (height / 2)).round();
+    else
+      y = 500;
+    print("image view ${x}, ${y}");
     File croppedFile = await FlutterNativeImage.cropImage(
         widget.image.path, x, y, width, height);
     return croppedFile;
@@ -86,7 +94,6 @@ class _ViewPageState extends State<ViewPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text("View Page"),
@@ -118,10 +125,12 @@ class _ViewPageState extends State<ViewPage> {
                     ),
               style: ElevatedButton.styleFrom(
                   primary: Color(0xFE2B3F87), minimumSize: Size(300, 50)),
-              onPressed: isPressed ? null : () => {
-                setState(() => isPressed = !isPressed),
-                doUpload(context),
-              },
+              onPressed: isPressed
+                  ? null
+                  : () => {
+                        setState(() => isPressed = !isPressed),
+                        doUpload(context),
+                      },
             ),
           )
         ],
