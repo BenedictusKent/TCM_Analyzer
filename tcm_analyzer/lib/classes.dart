@@ -49,7 +49,7 @@ const herbClass = [
   },
   {
     'class':'X9',
-    'engName': 'White Mulberry Root - bark',
+    'engName': 'White Mulberry Root-bark',
     'cnName': '桑白皮',
     'thumbnail': 'asset/X9/1.jpg'
   },
@@ -235,7 +235,7 @@ const herbClass = [
   },
   {
     'class':'X40',
-    'engName': 'Ma - yuen Jobstears Seed',
+    'engName': 'Ma-yuen Jobstears Seed',
     'cnName': '薏仁',
     'thumbnail': 'asset/X40/1.jpg'
   },

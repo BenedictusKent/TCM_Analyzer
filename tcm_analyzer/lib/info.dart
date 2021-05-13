@@ -34,7 +34,7 @@ class _InfoPageState extends State<InfoPage> {
     '野葛': 'X8',
     'Lobed Kudzuvine Root': 'X8',
     '桑白皮': 'X9',
-    'White Mulberry Root - bark': 'X9',
+    'White Mulberry Root-bark': 'X9',
     '桔梗': 'X10',
     'Balloonflower Root': 'X10',
     '山茱萸': 'X11',
@@ -96,7 +96,7 @@ class _InfoPageState extends State<InfoPage> {
     '骨碎補': 'X39',
     'Fortune\'s Drynaria Rhizome': 'X39',
     '薏仁': 'X40',
-    'Ma - yuen Jobstears Seed': 'X40',
+    'Ma-yuen Jobstears Seed': 'X40',
     '桑寄生': 'X41',
     'Chinese Taxillus Herb': 'X41',
   };
