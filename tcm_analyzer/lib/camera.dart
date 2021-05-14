@@ -15,6 +15,11 @@ class _CameraScreenState extends State<CameraScreen> {
   List cameras;
   int selectedCameraIndex;
   String imgPath;
+  int _pointers = 0;
+  double _baseScale = 1.0;
+  double _currentScale = 1.0;
+  double _minAvailableZoom = 1.0;
+  double _maxAvailableZoom = 1.0;
 
   @override
   void initState() {
@@ -125,9 +130,29 @@ class _CameraScreenState extends State<CameraScreen> {
               fontWeight: FontWeight.w900));
     }
     return AspectRatio(
-      aspectRatio: controller.value.aspectRatio,
-      child: CameraPreview(controller),
-    );
+        aspectRatio: controller.value.aspectRatio,
+        child: Listener(
+          onPointerDown: (_) {
+            _pointers++;
+            if (_pointers == 1) {
+              controller.setFocusMode(FocusMode.auto);
+            }
+          },
+          onPointerUp: (_) => _pointers--,
+          child: CameraPreview(
+            controller,
+            child: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+                return GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onScaleStart: _handleScaleStart,
+                  onScaleUpdate: _handleScaleUpdate,
+                  onTapDown: (details) => onViewFinderTap(details, constraints),
+                );
+              },
+            ),
+          ),
+        ));
   }
 
   void _onCapturePressed(context) async {
@@ -141,5 +166,31 @@ class _CameraScreenState extends State<CameraScreen> {
     } catch (e) {
       print(e);
     }
+  }
+
+  void onViewFinderTap(TapDownDetails details, BoxConstraints constraints) {
+    if (controller == null) {
+      return;
+    }
+
+    final CameraController cameraController = controller;
+
+    final offset = Offset(
+      details.localPosition.dx / constraints.maxWidth,
+      details.localPosition.dy / constraints.maxHeight,
+    );
+    cameraController.setExposurePoint(offset);
+    cameraController.setFocusPoint(offset);
+  }
+
+  void _handleScaleStart(ScaleStartDetails details) {
+    _baseScale = _currentScale;
+  }
+
+  Future<void> _handleScaleUpdate(ScaleUpdateDetails details) async {
+    if (controller == null || _pointers != 2) return;
+    _currentScale = (_baseScale * details.scale)
+        .clamp(_minAvailableZoom, _maxAvailableZoom);
+    await controller.setZoomLevel(_currentScale);
   }
 }
