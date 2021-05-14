@@ -161,9 +161,9 @@ class _ViewPageState extends State<ViewPage> {
                               fontSize: 20.0, fontFamily: 'Abyssinica'),
                         )
                       : Text(
-                          "Click to Predict",
+                          "Predict",
                           style: TextStyle(
-                              fontSize: 18.0, fontFamily: 'Abyssinica'),
+                              fontSize: 20.5, fontFamily: 'Abyssinica'),
                         ),
                   style: ElevatedButton.styleFrom(
                       primary: Color(0xFE2B3F87), minimumSize: Size(150, 50)),
