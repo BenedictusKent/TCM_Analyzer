@@ -63,9 +63,9 @@ async def output_predicted_image(input_img, client_session, model):
     # Apply NMS
     pred = non_max_suppression(pred)
 
-    thickness = int(0.01*img_w)
-    font_thickness = int(0.002*img_w)
-    font_scale = round(0.001*img_w, 1)
+    thickness = int(0.02*img_w)
+    font_thickness = int(0.0025*img_w)
+    font_scale = round(0.0015*img_w, 1)
     if img_w > 1000 or img_h > 1000:
          thickness = round(0.002 * (img_w + img_h) / 2) + 1
          font_thickness = round(0.002 * (img_w + img_h) / 2) + 1
