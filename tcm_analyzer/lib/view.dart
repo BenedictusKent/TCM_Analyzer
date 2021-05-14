@@ -76,7 +76,8 @@ class _ViewPageState extends State<ViewPage> {
       }
       final List responseData = json.decode(response.body)['class'];
       print(json.decode(response.body)['class']);
-      final Uint8List decodedImgBytes = base64Decode(json.decode(response.body)['image'].toString());
+      final Uint8List decodedImgBytes =
+          base64Decode(json.decode(response.body)['image'].toString());
       Navigator.pushNamed(context, '/result',
           arguments: ScreenArguments(responseData, decodedImgBytes));
       setState(() => isPressed = false);
@@ -126,15 +127,17 @@ class _ViewPageState extends State<ViewPage> {
       appBar: AppBar(
         title: Text("View Page"),
         backgroundColor: Color(0xFE2B3F87),
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.white,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.home_rounded,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              while (Navigator.canPop(context)) Navigator.pop(context);
+            },
           ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+        ],
       ),
       body: Column(
         children: <Widget>[

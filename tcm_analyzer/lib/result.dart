@@ -22,17 +22,28 @@ class _ResultPageState extends State<ResultPage> {
       appBar: AppBar(
         title: Text("Prediction Result"),
         backgroundColor: Color(0xFE2B3F87),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.home_rounded,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              while (Navigator.canPop(context)) Navigator.pop(context);
+            },
+          ),
+        ],
       ),
       body: Column(
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(20),
-              child: Image.memory(
-                widget.decodedImgBytes,
-                width: 300,
-                height: 300,
-                fit: BoxFit.cover,
-              ),
+            child: Image.memory(
+              widget.decodedImgBytes,
+              width: 300,
+              height: 300,
+              fit: BoxFit.cover,
+            ),
           ),
           ListView.builder(
             shrinkWrap: true,
