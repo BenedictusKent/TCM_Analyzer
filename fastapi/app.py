@@ -10,7 +10,7 @@ from tensorflow.keras.models import load_model
 
 app = FastAPI()
 client_session = aiohttp.ClientSession() # Start client session
-weights = '../serving/yolov5s_herb2_saved_model'
+weights = 'yolov5s_herb2_saved_model'
 herb_model = load_model(weights)
 
 @app.on_event("shutdown")

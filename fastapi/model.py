@@ -37,20 +37,6 @@ async def encode_image(image):
     byte_im = b64encode(buf.getvalue()).decode('ascii')
     return byte_im
 
-async def get_prediction(image, client_session,):
-
-    data = json.dumps({
-        "signature_name": "serving_default",
-        'instances': image.permute(0, 2, 3, 1).numpy().tolist()
-    })
-
-    async with client_session.post('http://localhost:8501/v1/models/herb_model:predict', data=data.encode('utf-8')) as response:
-        result = await response.json()
-        prediction = result['predictions']
-        prediction = np.asarray(prediction)
-
-    return prediction
-
 async def output_predicted_image(input_img, client_session, model):
     img_h, img_w, _ = input_img.shape
 
@@ -68,9 +54,7 @@ async def output_predicted_image(input_img, client_session, model):
         img = img.unsqueeze(0)
 
     # Predict
-
     pred = model(img.permute(0, 2, 3, 1).numpy(), training=False).numpy()
-    # pred = await get_prediction_v5(img, client_session)
 
     # Denormalize xywh
     pred[..., :4] *= IMAGE_SIZE

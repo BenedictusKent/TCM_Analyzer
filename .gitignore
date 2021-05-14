@@ -51,4 +51,4 @@ venv/
 __pycache__/
 
 # Tensorflow model
-yolov5s_herb_saved_model/
+serving/
