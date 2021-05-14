@@ -16,8 +16,12 @@ class ResultPage extends StatefulWidget {
 }
 
 class _ResultPageState extends State<ResultPage> {
+  bool isResultNull = false;
   @override
   Widget build(BuildContext context) {
+    if (widget.responseData.length == 0) {
+      isResultNull = true;
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text("Prediction Result"),
@@ -35,17 +39,28 @@ class _ResultPageState extends State<ResultPage> {
         ],
       ),
       body: SingleChildScrollView(
-                child: Column(children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Image.memory(
-                      widget.decodedImgBytes,
-                      width: 300,
-                      height: 300,
-                      fit: BoxFit.cover,
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Image.memory(
+                widget.decodedImgBytes,
+                width: 300,
+                height: 300,
+                fit: BoxFit.cover,
+              ),
+            ),
+            isResultNull
+                ? Center(
+                    child: Text(
+                      "Sorry, no herb predicted.",
+                      style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
                     ),
-                  ),
-                  ListView.builder(
+                  )
+                : ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: widget.responseData.length,
@@ -61,7 +76,8 @@ class _ResultPageState extends State<ResultPage> {
                               margin: const EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 10),
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20.0)),
                                   color: Colors.white,
                                   boxShadow: [
                                     BoxShadow(
@@ -72,14 +88,18 @@ class _ResultPageState extends State<ResultPage> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 20.0, vertical: 10),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Image.asset(item["thumbnail"],
                                         height: 100, width: 100),
-                                    Padding(padding: const EdgeInsets.only(left: 10)),
+                                    Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 10)),
                                     Expanded(
                                         child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
                                           item["engName"],
@@ -98,11 +118,11 @@ class _ResultPageState extends State<ResultPage> {
                                   ],
                                 ),
                               )));
-                          },
-                        )
-                ],
-              ),
-          ),
+                    },
+                  )
+          ],
+        ),
+      ),
     );
   }
 }

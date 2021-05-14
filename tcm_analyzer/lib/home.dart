@@ -34,6 +34,8 @@ class _HomePageState extends State<HomePage>
     }
   }
 
+  PageController _pageController = PageController(initialPage: 1);
+  
   @override
   void initState() {
     animationController =
@@ -47,6 +49,12 @@ class _HomePageState extends State<HomePage>
     animationController.addListener(() {
       setState(() {});
     });
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   @override
@@ -139,8 +147,10 @@ class _HomePageState extends State<HomePage>
           ),
 
           Expanded(
-            flex: 2,
-            child: PageView(children: <Widget>[
+            flex: 1,
+            child: PageView(
+              controller: _pageController,
+              children: <Widget>[
               Container(
                   child: Stack(
                 children: <Widget>[
