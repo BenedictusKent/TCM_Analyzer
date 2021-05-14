@@ -52,7 +52,7 @@ class _ViewPageState extends State<ViewPage> {
     // open a bytestream
     var request = http.MultipartRequest(
       'POST',
-      Uri.parse('https://700953e5a832.ngrok.io/api/predict'),
+      Uri.parse('https://2d5da958d1b3.ngrok.io/api/predict'),
     );
     final mimeTypeData =
         lookupMimeType(widget.image.path, headerBytes: [0xFF, 0xD8]).split('/');
@@ -74,8 +74,10 @@ class _ViewPageState extends State<ViewPage> {
         return null;
       }
       final List responseData = json.decode(response.body)['class'];
+      print(json.decode(response.body)['class']);
+      final decodedImgBytes = base64Decode(json.decode(response.body)['image']);
       Navigator.pushNamed(context, '/result',
-          arguments: ScreenArguments(responseData, "example"));
+          arguments: ScreenArguments(responseData, decodedImgBytes));
       setState(() => isPressed = false);
     } catch (e) {
       print(e);

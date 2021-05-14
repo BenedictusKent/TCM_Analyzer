@@ -21,7 +21,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) {
           ScreenArguments arguments = args;
           return ResultPage(
-              responseData: arguments.resData, name: arguments.nameData);
+              responseData: arguments.resData, decodedImgBytes: arguments.nameData);
         });
       default:
         return _errorRoute();

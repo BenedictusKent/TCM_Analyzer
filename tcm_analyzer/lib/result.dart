@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'dart:typed_data';
+import 'package:tcm_analyzer/classes.dart';
 
 class ResultPage extends StatefulWidget {
   final List responseData;
-  final String name;
+  final decodedImgBytes;
   ResultPage({
     Key key,
     @required this.responseData,
-    @required this.name,
+    @required this.decodedImgBytes,
   }) : super(key: key);
 
   @override
@@ -23,11 +25,17 @@ class _ResultPageState extends State<ResultPage> {
       ),
       body: Column(
         children: <Widget>[
+          // Image.memory(
+          //   widget.decodedImgBytes,
+          //   width: 85,
+          //   height: 85,
+          //   fit: BoxFit.cover,
+          // ),
           ListView.builder(
             shrinkWrap: true,
             itemCount: widget.responseData.length,
             itemBuilder: (context, index) {
-              final item = widget.responseData[index];
+              final item = herbClass[widget.responseData[index]];
               return GestureDetector(
                   onTap: () {
                     Navigator.pushNamed(context, '/info',
@@ -51,8 +59,6 @@ class _ResultPageState extends State<ResultPage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Image.asset(item["thumbnail"],
-                                height: 100, width: 100),
                             Padding(padding: const EdgeInsets.only(left: 10)),
                             Expanded(
                                 child: Column(
@@ -85,6 +91,6 @@ class _ResultPageState extends State<ResultPage> {
 
 class ScreenArguments {
   final List resData;
-  final String nameData;
+  final nameData;
   ScreenArguments(this.resData, this.nameData);
 }
