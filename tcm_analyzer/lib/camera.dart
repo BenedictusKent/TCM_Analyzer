@@ -16,6 +16,7 @@ class _CameraScreenState extends State<CameraScreen> {
   int selectedCameraIndex;
   String imgPath;
   int _pointers = 0;
+  int tap = 0;
   double _baseScale = 1.0;
   double _currentScale = 1.0;
   double _minAvailableZoom = 1.0;
@@ -134,7 +135,11 @@ class _CameraScreenState extends State<CameraScreen> {
         child: Listener(
           onPointerDown: (_) {
             _pointers++;
-            if (_pointers == 1) {
+            if (tap == 0) {
+              tap = 1;
+              controller.setFocusMode(FocusMode.locked);
+            } else if (tap == 1) {
+              tap = 0;
               controller.setFocusMode(FocusMode.auto);
             }
           },
