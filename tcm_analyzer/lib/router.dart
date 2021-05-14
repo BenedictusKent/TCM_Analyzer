@@ -18,7 +18,11 @@ class RouteGenerator {
       case '/view':
         return MaterialPageRoute(builder: (_) => ViewPage(image: args));
       case '/result':
-        return MaterialPageRoute(builder: (_) => ResultPage(responseData: args));
+        return MaterialPageRoute(builder: (_) {
+          ScreenArguments arguments = args;
+          return ResultPage(
+              responseData: arguments.resData, name: arguments.nameData);
+        });
       default:
         return _errorRoute();
     }
