@@ -52,3 +52,4 @@ __pycache__/
 
 # Tensorflow model
 serving/
+yolov5s_herb_saved_model/

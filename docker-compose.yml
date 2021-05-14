@@ -10,8 +10,8 @@ services:
     cpus: 0.5
     restart: always
     ports:
-      - "8880:80"
-    command: ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "80"]
+      - "8888:8888"
+    command: ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8888"]
     
   # webserver:
   #   build: ./nginx
@@ -23,16 +23,16 @@ services:
   #   depends_on: 
   #     - app
       
-  serving:
-    build: ./serving
-    image: gavinvivaldy/nordlinglab_where_service_tfserving:latest
-    container_name: where_service_tensorflow_serving
-    ports:
-      - 8500:8500
-      - 8501:8501
-    volumes:
-      - ./serving/yolov1m_model:/models/yolov1m_model/1
-      - ./serving/yolov5_model:/models/yolov5_model/1
-      - ./serving/tensorflow-serving:/models/
-    command:
-      - '--model_config_file=/models/model.config'
+  # serving:
+  #   build: ./serving
+  #   image: gavinvivaldy/nordlinglab_where_service_tfserving:latest
+  #   container_name: where_service_tensorflow_serving
+  #   ports:
+  #     - 8500:8500
+  #     - 8501:8501
+  #   volumes:
+  #     - ./serving/yolov1m_model:/models/yolov1m_model/1
+  #     - ./serving/yolov5_model:/models/yolov5_model/1
+  #     - ./serving/tensorflow-serving:/models/
+  #   command:
+  #     - '--model_config_file=/models/model.config'

@@ -10,6 +10,10 @@ RUN apt-get clean \
     && apt-get -y update \
     && apt-get -y upgrade
 
+RUN apt-get -y install build-essential \
+    && apt-get -y install libgl1-mesa-dev \
+    && apt-get -y install libglib2.0-0
+
 # Install python 3.8, the base image comes with 3.6 by default
 RUN apt-get install -y software-properties-common wget \
     && add-apt-repository -y ppa:deadsnakes/ppa \

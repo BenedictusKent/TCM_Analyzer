@@ -1,7 +1,5 @@
-import tensorflow as tf
 import numpy as np
 import cv2
-import json
 import os
 import torch
 
@@ -11,7 +9,6 @@ from utils.datasets import letterbox
 from utils.torch_utils import select_device
 from base64 import b64encode
 from io import BytesIO
-from tensorflow.keras.models import load_model
 
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 
@@ -37,7 +34,7 @@ async def encode_image(image):
     byte_im = b64encode(buf.getvalue()).decode('ascii')
     return byte_im
 
-async def output_predicted_image(input_img, client_session, model):
+async def output_predicted_image(input_img, model):
     img_h, img_w, _ = input_img.shape
 
     # Preprocess image

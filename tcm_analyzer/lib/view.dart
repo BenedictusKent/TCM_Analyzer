@@ -53,7 +53,7 @@ class _ViewPageState extends State<ViewPage> {
     // open a bytestream
     var request = http.MultipartRequest(
       'POST',
-      Uri.parse('https://034f319995f5.ngrok.io/api/predict'),
+      Uri.parse('http://140.116.155.14:8888/api/predict'),
     );
     final mimeTypeData =
         lookupMimeType(widget.image.path, headerBytes: [0xFF, 0xD8]).split('/');
