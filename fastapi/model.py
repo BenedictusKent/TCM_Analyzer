@@ -95,25 +95,26 @@ async def output_predicted_image(input_img, client_session, model):
             # Write results
             for *xyxy, conf, cls in reversed(det):
                 # Record result class
-                if int(cls) not in result:
-                    result.append(int(cls))
+                if conf > conf_thres:
+                    if int(cls) not in result:
+                        result.append(int(cls))
 
-                 # draw a bounding box rectangle and label on the image
-                c1, c2 = (int(xyxy[0]), int(xyxy[1])), (int(xyxy[2]), int(xyxy[3]))
-                input_img = cv2.rectangle(input_img, c1, c2, colors[int(cls)], thickness)
-                text = f"{herbs[int(cls)]}: {round(conf * 100, 2)}%"
+                    # draw a bounding box rectangle and label on the image
+                    c1, c2 = (int(xyxy[0]), int(xyxy[1])), (int(xyxy[2]), int(xyxy[3]))
+                    input_img = cv2.rectangle(input_img, c1, c2, colors[int(cls)], thickness)
+                    text = f"{herbs[int(cls)]}: {round(conf * 100, 2)}%"
 
-                # calculate text width & height to draw the transparent boxes as background of the text
-                (text_width, text_height) = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, font_scale, font_thickness)[0]
-                text_offset_x = int(xyxy[0]) - 2
-                text_offset_y = int(xyxy[1]) - 4
-                box_coords = ((text_offset_x, text_offset_y), (text_offset_x + text_width + 2, text_offset_y - text_height))
-                overlay = input_img.copy()
-                overlay = cv2.rectangle(overlay, box_coords[0], box_coords[1], colors[int(cls)], cv2.FILLED)
+                    # calculate text width & height to draw the transparent boxes as background of the text
+                    (text_width, text_height) = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, font_scale, font_thickness)[0]
+                    text_offset_x = int(xyxy[0]) - 2
+                    text_offset_y = int(xyxy[1]) - 4
+                    box_coords = ((text_offset_x, text_offset_y), (text_offset_x + text_width + 2, text_offset_y - text_height))
+                    overlay = input_img.copy()
+                    overlay = cv2.rectangle(overlay, box_coords[0], box_coords[1], colors[int(cls)], cv2.FILLED)
 
-                # add opacity (transparency to the box)
-                input_img = cv2.addWeighted(overlay, 0.6, input_img, 0.4, 0)
+                    # add opacity (transparency to the box)
+                    input_img = cv2.addWeighted(overlay, 0.6, input_img, 0.4, 0)
 
-                # now put the text (label: confidence %)
-                input_img = cv2.putText(input_img, text, (text_offset_x, text_offset_y), cv2.FONT_HERSHEY_SIMPLEX, font_scale, (0, 0, 0), font_thickness)
+                    # now put the text (label: confidence %)
+                    input_img = cv2.putText(input_img, text, (text_offset_x, text_offset_y), cv2.FONT_HERSHEY_SIMPLEX, font_scale, (0, 0, 0), font_thickness)
     return result, input_img
