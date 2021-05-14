@@ -53,7 +53,7 @@ class _ViewPageState extends State<ViewPage> {
     // open a bytestream
     var request = http.MultipartRequest(
       'POST',
-      Uri.parse('https://2d5da958d1b3.ngrok.io/api/predict'),
+      Uri.parse('https://034f319995f5.ngrok.io/api/predict'),
     );
     final mimeTypeData =
         lookupMimeType(widget.image.path, headerBytes: [0xFF, 0xD8]).split('/');
@@ -114,7 +114,7 @@ class _ViewPageState extends State<ViewPage> {
     // TODO: implement initState
     setState(() => isPressed = false);
     super.initState();
-    cropImage(395, 395).then((value) {
+    cropImage(500, 500).then((value) {
       setState(() {
         imgCropped = value;
       });
