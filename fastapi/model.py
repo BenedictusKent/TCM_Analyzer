@@ -3,8 +3,6 @@ import numpy as np
 import cv2
 import json
 import os
-import time
-import colorsys
 import torch
 
 from numpy import random
@@ -23,7 +21,13 @@ conf_thres = 0.7
 stride = 32
 device = select_device('')
 
-herbs = ['Baikal Skullcap Root', 'Radix Rehmanniae Preparata', 'Pilose Asiabell Root', 'Licorice', 'Two-toothed Achyranthes', 'Dwarf Lilyturf Root Tuber', 'Largehead Atractylodes Rhizome', 'Lobed Kudzuvine Root', 'White Mulberry Root-bark', 'Balloonflower Root', 'Medical Dogwood', 'Tuber Fleeceflower Root', 'Red Paeoniae Trichocarpae', 'Cassia Bark', 'Chinese Angelica', 'Szechwan Lovage Rhizome', 'Safflower', 'Immature Bitter Orange', 'Common Jujube', 'Manchurian Wildginger Herb', 'Weeping Forsythia Fruit', 'Common Yam Rhizome', 'Common Coltsfoot Flower', 'Dried Ginger', 'Prepared Common Monkshood Daughter Root', 'Peach Seed', 'Tatarian Aster Root', 'Combined Spicebush Root', 'Tree Peony Bark', 'Barbary Wolfberry', 'Nutmeg', 'Indian Buead Tuckahoe', 'Cassiabarktree Twig', 'Florists Dendranthema', 'Ginseng Root', 'Mongolian Milkvetch Root', 'Common Anemarrhena', 'Radix Rehmanniae Recens', "Fortune's Drynaria Rhizome", 'Ma-yuen Jobstears Seed', 'Chinese Taxillus Herb']
+herbs = ['Baikal Skullcap Root', 'Radix Rehmanniae Preparata', 'Pilose Asiabell Root', 'Licorice', 'Two-toothed Achyranthes', 
+        'Dwarf Lilyturf Root Tuber', 'Largehead Atractylodes Rhizome', 'Lobed Kudzuvine Root', 'White Mulberry Root-bark', 'Balloonflower Root', 
+        'Medical Dogwood', 'Tuber Fleeceflower Root', 'Red Paeoniae Trichocarpae', 'Cassia Bark', 'Chinese Angelica', 'Szechwan Lovage Rhizome', 
+        'Safflower', 'Immature Bitter Orange', 'Common Jujube', 'Manchurian Wildginger Herb', 'Weeping Forsythia Fruit', 'Common Yam Rhizome', 
+        'Common Coltsfoot Flower', 'Dried Ginger', 'Prepared Common Monkshood Daughter Root', 'Peach Seed', 'Tatarian Aster Root', 'Combined Spicebush Root', 
+        'Tree Peony Bark', 'Barbary Wolfberry', 'Nutmeg', 'Indian Buead Tuckahoe', 'Cassiabarktree Twig', 'Florists Dendranthema', 'Ginseng Root', 'Mongolian Milkvetch Root', 
+        'Common Anemarrhena', 'Radix Rehmanniae Recens', "Fortune's Drynaria Rhizome", 'Ma-yuen Jobstears Seed', 'Chinese Taxillus Herb']
 
 colors = [[random.randint(0, 255) for _ in range(3)] for _ in herbs]
 
