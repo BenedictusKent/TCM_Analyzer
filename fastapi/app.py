@@ -5,6 +5,7 @@ import numpy as np
 import cv2
 import aiohttp
 import torch
+import base64
 
 from urllib.parse import quote
 from fastapi import FastAPI, Request, UploadFile, Form
@@ -16,20 +17,6 @@ client_session = aiohttp.ClientSession() # Start client session
 weights = '../serving/yolov5s_herb2_saved_model'
 herb_model = load_model(weights)
 
-def results_to_json(results, model):
-    return [
-        [
-            {
-                "class": int(pred[5]),
-                "class_name": model.model.names[int(pred[5])],
-                "normalized_box": pred[:4].tolist(),
-                "confidence": float(pred[4]),
-            }
-            for pred in result
-        ]
-        for result in results.xyxyn
-    ]
-
 @app.on_event("shutdown")
 async def cleanup():
     await client_session.close()
@@ -40,14 +27,13 @@ async def predict_image(request: Request):
     form = await request.form()
     contents = await form["image"].read()
     img = cv2.imdecode(np.frombuffer(contents, np.uint8), cv2.IMREAD_COLOR)
-    herb_class = await model.output_predicted_image(img, client_session, herb_model)
-    # byte_im = await model.encode_image(img)
-
-     # Pass predicted image in data uri
-    # data_uri = 'data:image/jpg;base64,{}'.format(quote(byte_im))
-
+    herb_class, img = await model.output_predicted_image(img, client_session, herb_model)
+    byte_im = await model.encode_image(img)
+    # my_string = base64.b64encode(img).decode('ascii')
+    print(herb_class)
     result_response = {
-        'class': herb_class
+        'class': herb_class,
+        'image': byte_im
     }
     print("Got predicted data in ---" + str(time.time() - start_time) + "seconds ---")
     return JSONResponse(content=result_response)

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_size_getter/file_input.dart';
@@ -75,7 +76,7 @@ class _ViewPageState extends State<ViewPage> {
       }
       final List responseData = json.decode(response.body)['class'];
       print(json.decode(response.body)['class']);
-      final decodedImgBytes = base64Decode(json.decode(response.body)['image']);
+      final Uint8List decodedImgBytes = base64Decode(json.decode(response.body)['image'].toString());
       Navigator.pushNamed(context, '/result',
           arguments: ScreenArguments(responseData, decodedImgBytes));
       setState(() => isPressed = false);

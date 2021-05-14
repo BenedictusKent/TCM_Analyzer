@@ -4,7 +4,7 @@ import 'package:tcm_analyzer/classes.dart';
 
 class ResultPage extends StatefulWidget {
   final List responseData;
-  final decodedImgBytes;
+  final Uint8List decodedImgBytes;
   ResultPage({
     Key key,
     @required this.responseData,
@@ -25,12 +25,15 @@ class _ResultPageState extends State<ResultPage> {
       ),
       body: Column(
         children: <Widget>[
-          // Image.memory(
-          //   widget.decodedImgBytes,
-          //   width: 85,
-          //   height: 85,
-          //   fit: BoxFit.cover,
-          // ),
+          Padding(
+            padding: const EdgeInsets.all(20),
+              child: Image.memory(
+                widget.decodedImgBytes,
+                width: 300,
+                height: 300,
+                fit: BoxFit.cover,
+              ),
+          ),
           ListView.builder(
             shrinkWrap: true,
             itemCount: widget.responseData.length,
@@ -42,7 +45,7 @@ class _ResultPageState extends State<ResultPage> {
                         arguments: item["engName"]);
                   },
                   child: Container(
-                      height: 130,
+                      height: 110,
                       margin: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 10),
                       decoration: BoxDecoration(
@@ -91,6 +94,6 @@ class _ResultPageState extends State<ResultPage> {
 
 class ScreenArguments {
   final List resData;
-  final nameData;
+  final Uint8List nameData;
   ScreenArguments(this.resData, this.nameData);
 }
