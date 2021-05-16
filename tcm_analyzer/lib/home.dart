@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage>
   }
 
   PageController _pageController = PageController(initialPage: 1);
-  
+
   @override
   void initState() {
     animationController =
@@ -63,9 +63,22 @@ class _HomePageState extends State<HomePage>
 
     childButtons.add(UnicornButton(
         hasLabel: true,
-        labelText: "Camera",
+        labelText: "System Camera",
         currentButton: FloatingActionButton(
-          heroTag: "Camera",
+          heroTag: "System Camera",
+          backgroundColor: Colors.blue,
+          mini: true,
+          child: Icon(Icons.phone_android),
+          onPressed: () {
+            pickImage(ImageSource.camera);
+          },
+        )));
+
+    childButtons.add(UnicornButton(
+        hasLabel: true,
+        labelText: "App Camera",
+        currentButton: FloatingActionButton(
+          heroTag: "App Camera",
           backgroundColor: Colors.red,
           mini: true,
           child: Icon(Icons.add_a_photo_rounded),
@@ -148,9 +161,7 @@ class _HomePageState extends State<HomePage>
 
           Expanded(
             flex: 1,
-            child: PageView(
-              controller: _pageController,
-              children: <Widget>[
+            child: PageView(controller: _pageController, children: <Widget>[
               Container(
                   child: Stack(
                 children: <Widget>[
