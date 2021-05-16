@@ -36,13 +36,21 @@ class _ViewPageState extends State<ViewPage> {
     var high = dim.height;
     var wide = dim.width;
     int x, y;
-    if (wide != 0)
+    // counting width
+    if (wide > 2000)
       x = ((wide / 2) - (width / 2)).round();
-    else
+    else if (wide < 2000 && wide != 0) {
+      width = 500;
+      x = ((wide / 2) - (width / 2)).round();
+    } else
       x = 500;
-    if (high != 0)
+    // counting height
+    if (high > 2000)
       y = ((high / 2) - (height / 2)).round();
-    else
+    else if (high < 2000 && wide != 0) {
+      height = 500;
+      y = ((high / 2) - (height / 2)).round();
+    } else
       y = 500;
     File croppedFile = await FlutterNativeImage.cropImage(
         widget.image.path, x, y, width, height);
@@ -114,7 +122,7 @@ class _ViewPageState extends State<ViewPage> {
     // TODO: implement initState
     setState(() => isPressed = false);
     super.initState();
-    cropImage(500, 500).then((value) {
+    cropImage(1000, 1000).then((value) {
       setState(() {
         imgCropped = value;
       });
