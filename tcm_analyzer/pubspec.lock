@@ -163,6 +163,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.2"
+  image_b:
+    dependency: "direct main"
+    description:
+      name: image_b
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.9"
   image_cropper:
     dependency: "direct main"
     description:

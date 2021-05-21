@@ -39,6 +39,7 @@ dependencies:
   image_picker:
   unicorndial:
   image_cropper:
+  image_b:
   
 dev_dependencies:
   flutter_test:
