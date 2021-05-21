@@ -13,6 +13,7 @@ import 'package:http_parser/http_parser.dart';
 import 'package:mime/mime.dart';
 import 'package:path/path.dart';
 import 'package:tcm_analyzer/result.dart';
+import 'package:image_b/image_b.dart';
 
 bool isPressed = false;
 bool isCropped = false;
@@ -30,6 +31,7 @@ class ViewPage extends StatefulWidget {
 
 class _ViewPageState extends State<ViewPage> {
   File imgCropped;
+  String imgStatus = "Original";
   Future<File> cropImage(int height, int width) async {
     File convert = File(widget.image.path);
     var dim = isg.ImageSizeGetter.getSize(FileInput(convert));
@@ -54,6 +56,16 @@ class _ViewPageState extends State<ViewPage> {
       y = 500;
     File croppedFile = await FlutterNativeImage.cropImage(
         widget.image.path, x, y, width, height);
+    // test if image blurry
+    try {
+      if (await ImageB.isImageBlurry(croppedFile.path) == 0) {
+        imgStatus = "Blurry";
+      } else {
+        imgStatus = "Clear";
+      }
+    } on Exception catch (e) {
+      print(e);
+    }
     return croppedFile;
   }
 
