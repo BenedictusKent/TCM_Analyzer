@@ -101,6 +101,25 @@ class _InfoPageState extends State<InfoPage> {
     'Chinese Taxillus Herb': 'X41',
   };
 
+  String convertToTitleCase(String text) {
+    if (text == null) {
+      return null;
+    }
+    if (text.length <= 1) {
+      return text.toUpperCase();
+    }
+    final List<String> words = text.split(' ');
+    final capitalizedWords = words.map((word) {
+      if (word.trim().isNotEmpty) {
+        final String firstLetter = word.trim().substring(0, 1).toUpperCase();
+        final String remainingLetters = word.trim().substring(1);
+        return '$firstLetter$remainingLetters';
+      }
+      return '';
+    });
+    return capitalizedWords.join(' ');
+  }
+
   // function
   String whichfolder(String args) {
     // choose which folder in 'asset' to use
@@ -544,33 +563,34 @@ class _InfoPageState extends State<InfoPage> {
   // Widget to put image
   Widget pickImage(bool status, String path, String number) {
     if (status) {
-      return Expanded (
+      return Expanded(
         child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Container(
-          alignment: Alignment.center,
-          height: 180.0,
-          width: 180.0,
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.black),
-              image: DecorationImage(
-                  image: AssetImage("asset/$path/$number.jpg"),
-                  fit: BoxFit.fill)),
+          padding: const EdgeInsets.all(10),
+          child: Container(
+            alignment: Alignment.center,
+            height: 180.0,
+            width: 180.0,
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+                image: DecorationImage(
+                    image: AssetImage("asset/$path/$number.jpg"),
+                    fit: BoxFit.fill)),
           ),
         ),
       );
     } else {
-      return Expanded (
+      return Expanded(
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Container(
-          alignment: Alignment.center,
-          height: 180.0,
-          width: 180.0,
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.black),
-              image: DecorationImage(
-                  image: AssetImage("asset/no-camera.png"), fit: BoxFit.fill)),
+            alignment: Alignment.center,
+            height: 180.0,
+            width: 180.0,
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+                image: DecorationImage(
+                    image: AssetImage("asset/no-camera.png"),
+                    fit: BoxFit.fill)),
           ),
         ),
       );
@@ -579,8 +599,9 @@ class _InfoPageState extends State<InfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    folder = whichfolder(widget.data);
-    text = allinfo(widget.data, folder);
+    var temp = convertToTitleCase(widget.data);
+    folder = whichfolder(temp);
+    text = allinfo(temp, folder);
     if (folder == 'X')
       stat = false;
     else
