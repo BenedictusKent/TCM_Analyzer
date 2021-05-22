@@ -14,9 +14,10 @@ import 'package:mime/mime.dart';
 import 'package:path/path.dart';
 import 'package:tcm_analyzer/result.dart';
 import 'package:image_b/image_b.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 bool isPressed = false;
-bool isCropped = false;
+bool isToastShown = false;
 
 class ViewPage extends StatefulWidget {
   final XFile image;
@@ -132,7 +133,10 @@ class _ViewPageState extends State<ViewPage> {
   @override
   void initState() {
     // TODO: implement initState
-    setState(() => isPressed = false);
+    setState(() {
+      isPressed = false;
+      isToastShown = false;
+    });
     super.initState();
     cropImage(1000, 1000).then((value) {
       setState(() {
@@ -172,29 +176,48 @@ class _ViewPageState extends State<ViewPage> {
           Row(
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(left: 25),
-                child: ElevatedButton(
-                  child: isPressed
-                      ? Text(
-                          "Predicting ... ",
-                          style: TextStyle(
-                              fontSize: 20.0, fontFamily: 'Abyssinica'),
-                        )
-                      : Text(
-                          "Predict",
-                          style: TextStyle(
-                              fontSize: 20.5, fontFamily: 'Abyssinica'),
-                        ),
-                  style: ElevatedButton.styleFrom(
-                      primary: Color(0xFE2B3F87), minimumSize: Size(150, 50)),
-                  onPressed: isPressed
-                      ? null
-                      : () => {
-                            setState(() => isPressed = !isPressed),
-                            doUpload(context),
-                          },
-                ),
-              ),
+                  padding: EdgeInsets.only(left: 30),
+                  child: ElevatedButton(
+                      child: isPressed
+                          ? Text(
+                              "Predicting ...",
+                              style: TextStyle(
+                                  fontSize: 20.0, fontFamily: 'Abyssinica'),
+                            )
+                          : Text(
+                              "Predict",
+                              style: TextStyle(
+                                  fontSize: 20.5, fontFamily: 'Abyssinica'),
+                            ),
+                      style: ElevatedButton.styleFrom(
+                          primary: Color(0xFE2B3F87),
+                          minimumSize: Size(150, 50)),
+                      onPressed: isPressed
+                          ? null
+                          : () => {
+                                if (imgStatus == "Blurry")
+                                  {
+                                    if (isToastShown)
+                                      {
+                                        setState(() => isPressed = !isPressed),
+                                        doUpload(context),
+                                      }
+                                    else
+                                      {
+                                        Fluttertoast.showToast(
+                                          msg:
+                                              "Image may be blurry. Consider using System Camera.",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.BOTTOM,
+                                          timeInSecForIosWeb: 2,
+                                          backgroundColor: Colors.grey,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0,
+                                        ),
+                                        isToastShown = true,
+                                      }
+                                  }
+                              })),
               Padding(
                 padding: EdgeInsets.only(left: 22),
                 child: ElevatedButton(
