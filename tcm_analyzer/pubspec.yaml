@@ -40,6 +40,7 @@ dependencies:
   unicorndial:
   image_cropper:
   image_b:
+  fluttertoast:
   
 dev_dependencies:
   flutter_test:
