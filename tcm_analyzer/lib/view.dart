@@ -124,6 +124,15 @@ class _ViewPageState extends State<ViewPage> {
       ),
     );
     if (cropped != null) {
+      try {
+        if (await ImageB.isImageBlurry(cropped.path) == 0) {
+          imgStatus = "Blurry";
+        } else {
+          imgStatus = "Clear";
+        }
+      } on Exception catch (e) {
+        print(e);
+      }
       setState(() {
         imgCropped = cropped;
       });
@@ -217,6 +226,11 @@ class _ViewPageState extends State<ViewPage> {
                                         isToastShown = true,
                                       }
                                   }
+                                else
+                                  {
+                                    setState(() => isPressed = !isPressed),
+                                    doUpload(context),
+                                  }
                               })),
               Padding(
                 padding: EdgeInsets.only(left: 22),
@@ -230,6 +244,7 @@ class _ViewPageState extends State<ViewPage> {
                   onPressed: isPressed
                       ? null
                       : () => {
+                            isToastShown = false,
                             recropImage(),
                           },
                 ),
