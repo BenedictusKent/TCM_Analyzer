@@ -160,6 +160,8 @@ class _HomePageState extends State<HomePage>
                               );
                             },
                             onSuggestionSelected: (suggestion) {
+                              myController.clear();
+                              names.insert(0, suggestion);
                               Navigator.pushNamed(context, '/info',
                                   arguments: suggestion);
                             },
