@@ -1,8 +1,10 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tcm_analyzer/autocomplete.dart';
 import 'package:unicorndial/unicorndial.dart';
 import 'package:tcm_analyzer/classes.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -105,7 +107,7 @@ class _HomePageState extends State<HomePage>
         body: Column(children: <Widget>[
           // app bar
           Container(
-            height: 160.0,
+            height: 190.0,
             width: MediaQuery.of(context).size.width,
             color: Color(0xFE2B3F87),
             child: Column(children: <Widget>[
@@ -121,37 +123,47 @@ class _HomePageState extends State<HomePage>
                   )),
               // search bar
               Container(
-                margin: EdgeInsets.only(left: 15.0, right: 15.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5.0),
-                  color: Color(0xFFEDEDED),
-                ),
                 child: Padding(
-                    padding: const EdgeInsets.all(5.0),
+                    padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                     child: Material(
+                      borderRadius: BorderRadius.circular(5.0),
                       color: Color(0xFFEDEDED),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          Icon(
-                            Icons.search,
-                            color: Colors.grey,
-                          ),
                           Expanded(
-                              child: TextField(
-                            controller: myController,
-                            decoration:
-                                InputDecoration.collapsed(hintText: "search"),
-                            onSubmitted: (value) {
-                              if (value != "") {
-                                names.removeAt(5);
-                                names.insert(0, myController.text);
-                              }
-                              myController.clear();
-                              Navigator.pushNamed(context, '/info',
-                                  arguments: names[0]);
+                              child: TypeAheadField(
+                            textFieldConfiguration: TextFieldConfiguration(
+                                controller: myController,
+                                autofocus: false,
+                                style: TextStyle(fontFamily: 'Abyssinica'),
+                                decoration: InputDecoration(
+                                  prefixIcon: Icon(Icons.search),
+                                  border: OutlineInputBorder(),
+                                  hintText: "search",
+                                ),
+                                onSubmitted: (value) {
+                                  if (value != "") {
+                                    names.removeAt(5);
+                                    names.insert(0, myController.text);
+                                  }
+                                  myController.clear();
+                                  Navigator.pushNamed(context, '/info',
+                                      arguments: names[0]);
+                                }),
+                            suggestionsCallback: (pattern) async {
+                              return autoComplete.getSuggestions(pattern);
                             },
-                          ))
+                            itemBuilder: (context, suggestion) {
+                              return ListTile(
+                                title: Text(suggestion),
+                              );
+                            },
+                            onSuggestionSelected: (suggestion) {
+                              Navigator.pushNamed(context, '/info',
+                                  arguments: suggestion);
+                            },
+                          )),
                         ],
                       ),
                     )),

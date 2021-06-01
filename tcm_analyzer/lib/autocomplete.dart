@@ -1,0 +1,101 @@
+class autoComplete {
+  final List<String> chinese = [
+    '黃苓',
+    '熟地黃',
+    '黨參',
+    '甘草',
+    '懷牛膝',
+    '麥門冬',
+    '白术',
+    '野葛',
+    '桑白皮',
+    '桔梗',
+    '山茱萸',
+    '何首烏',
+    '赤芍',
+    '桂皮',
+    '岷當歸',
+    '川芎',
+    '川紅花',
+    '枳實',
+    '紅棗',
+    '細辛根',
+    '連翹',
+    '懷山藥',
+    '款冬花',
+    '乾薑',
+    '袍附子',
+    '桃仁',
+    '紫苑',
+    '烏藥',
+    '銅陵鳳丹皮',
+    '寧夏枸杞',
+    '荳蔻',
+    '茯苓',
+    '桂枝',
+    '懷菊花',
+    '白參',
+    '北黃耆',
+    '知母',
+    '生地黃',
+    '骨碎補',
+    '薏仁',
+    '桑寄生',
+  ];
+
+  static Future<List> getSuggestions(String query) async {
+    final List<String> english = [
+      'Baikal Skullcap Root',
+      'Radix Rehmanniae Preparata',
+      'Pilose Asiabell Root',
+      'Licorice',
+      'Two-toothed Achyranthes',
+      'Dwarf Lilyturf Root Tuber',
+      'Largehead Atractylodes Rhizome',
+      'Lobed Kudzuvine Root',
+      'White Mulberry Root-bark',
+      'Balloonflower Root',
+      'Medical Dogwood',
+      'Tuber Fleeceflower Root',
+      'Red Paeoniae Trichocarpae',
+      'Cassia Bark',
+      'Chinese Angelica',
+      'Szechwan Lovage Rhizome',
+      'Safflower',
+      'Immature Bitter Orange',
+      'Common Jujube',
+      'Manchurian Wildginger Herb',
+      'Weeping Forsythia Fruit',
+      'Common Yam Rhizome',
+      'Common Coltsfoot Flower',
+      'Dried Ginger',
+      'Prepared Common Monkshood Daughter Root',
+      'Peach Seed',
+      'Tatarian Aster Root',
+      'Combined Spicebush Root',
+      'Tree Peony Bark',
+      'Barbary Wolfberry',
+      'Nutmeg',
+      'Indian Buead Tuckahoe',
+      'Cassiabarktree Twig',
+      'Florists Dendranthema',
+      'Ginseng Root',
+      'Mongolian Milkvetch Root',
+      'Common Anemarrhena',
+      'Radix Rehmanniae Recens',
+      'Fortune\'s Drynaria Rhizome',
+      'Ma-yuen Jobstears Seed',
+      'Chinese Taxillus Herb',
+    ];
+    List<String> answer = [];
+    final queryLower = query.toLowerCase();
+    for (String name in english) {
+      String titleLower = name.toLowerCase();
+      if (titleLower.contains(queryLower)) {
+        answer.add(name);
+      }
+    }
+    print("$answer");
+    return answer;
+  }
+}
