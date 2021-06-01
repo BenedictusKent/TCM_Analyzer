@@ -41,6 +41,7 @@ dependencies:
   image_cropper:
   image_b:
   fluttertoast:
+  flutter_typeahead:
   
 dev_dependencies:
   flutter_test:
