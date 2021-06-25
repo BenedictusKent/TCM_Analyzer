@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Info page
 class InfoPage extends StatefulWidget {
   // pass in arguments
   final String data;
@@ -101,6 +102,7 @@ class _InfoPageState extends State<InfoPage> {
     'Chinese Taxillus Herb': 'X41',
   };
 
+  // function to convert string to title-case
   String convertToTitleCase(String text) {
     if (text == null) {
       return null;
@@ -120,9 +122,8 @@ class _InfoPageState extends State<InfoPage> {
     return capitalizedWords.join(' ');
   }
 
-  // function
+  // function to choose which folder in 'assest' to use
   String whichfolder(String args) {
-    // choose which folder in 'asset' to use
     String temp;
     if (map1.containsKey(args))
       temp = map1[args];
@@ -131,6 +132,7 @@ class _InfoPageState extends State<InfoPage> {
     return temp;
   }
 
+  // function that gives all information in info page
   String allinfo(String args, String folder) {
     // all info needed in this page
     String temp;

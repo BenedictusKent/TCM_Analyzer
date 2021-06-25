@@ -6,6 +6,7 @@ import 'package:unicorndial/unicorndial.dart';
 import 'package:tcm_analyzer/classes.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
+// Home Page
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -17,17 +18,9 @@ class _HomePageState extends State<HomePage>
   final myController = TextEditingController();
   List<String> names = ["寧夏枸杞", "熟地黃", "黨參", "甘草", "懷牛膝", "麥門冬"];
   XFile image;
-  AnimationController animationController;
-  Animation translation;
-  Animation rotation;
-  Animation otherrotation;
+  PageController _pageController = PageController(initialPage: 1);
 
-  // functions
-  double getRadians(double degree) {
-    double radian = 57.2958;
-    return degree / radian;
-  }
-
+  // function to take image by camera or gallery and direct to View page
   Future pickImage(ImageSource imageSource) async {
     PickedFile img = await ImagePicker().getImage(source: imageSource);
     if (img != null) {
@@ -36,33 +29,10 @@ class _HomePageState extends State<HomePage>
     }
   }
 
-  PageController _pageController = PageController(initialPage: 1);
-
-  @override
-  void initState() {
-    animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 250));
-    translation = Tween(begin: 0.0, end: 1.0).animate(animationController);
-    rotation = Tween<double>(begin: 180.0, end: 0.0).animate(
-        CurvedAnimation(parent: animationController, curve: Curves.easeOut));
-    otherrotation = Tween<double>(begin: 0.0, end: 225.0).animate(
-        CurvedAnimation(parent: animationController, curve: Curves.easeOut));
-    super.initState();
-    animationController.addListener(() {
-      setState(() {});
-    });
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
+    // list of buttons for floating action button
     List<UnicornButton> childButtons = [];
-
     childButtons.add(UnicornButton(
         hasLabel: true,
         labelText: "System Camera",
@@ -75,7 +45,6 @@ class _HomePageState extends State<HomePage>
             pickImage(ImageSource.camera);
           },
         )));
-
     childButtons.add(UnicornButton(
         hasLabel: true,
         labelText: "App Camera",
@@ -88,7 +57,6 @@ class _HomePageState extends State<HomePage>
             Navigator.pushNamed(context, '/camera');
           },
         )));
-
     childButtons.add(UnicornButton(
         hasLabel: true,
         labelText: "Gallery",
@@ -132,6 +100,7 @@ class _HomePageState extends State<HomePage>
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
                           Expanded(
+                              // search suggestion dropdown
                               child: TypeAheadField(
                             textFieldConfiguration: TextFieldConfiguration(
                                 controller: myController,
@@ -314,6 +283,7 @@ class _HomePageState extends State<HomePage>
             ]),
           ),
         ]),
+        // floating action button
         floatingActionButton: UnicornDialer(
             backgroundColor: Color.fromRGBO(255, 255, 255, 0),
             parentButtonBackground: Colors.blue[900],
@@ -323,6 +293,7 @@ class _HomePageState extends State<HomePage>
   }
 }
 
+// function used in camera.dart
 class CircularButton extends StatelessWidget {
   // declare variables
   final double width;

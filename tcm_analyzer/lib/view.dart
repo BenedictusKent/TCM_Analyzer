@@ -19,6 +19,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 bool isPressed = false;
 bool isToastShown = false;
 
+// View page
 class ViewPage extends StatefulWidget {
   final XFile image;
   ViewPage({
@@ -31,8 +32,11 @@ class ViewPage extends StatefulWidget {
 }
 
 class _ViewPageState extends State<ViewPage> {
+  // declarations
   File imgCropped;
   String imgStatus = "Original";
+
+  // function for "auto" crop
   Future<File> cropImage(int height, int width) async {
     File convert = File(widget.image.path);
     var dim = isg.ImageSizeGetter.getSize(FileInput(convert));
@@ -70,6 +74,7 @@ class _ViewPageState extends State<ViewPage> {
     return croppedFile;
   }
 
+  // fucntion to send image to server
   Future doUpload(context) async {
     // open a bytestream
     var request = http.MultipartRequest(
@@ -108,6 +113,7 @@ class _ViewPageState extends State<ViewPage> {
     }
   }
 
+  // function to recrop image using Image Cropper
   void recropImage() async {
     File image = File(widget.image.path);
     File cropped = await ImageCropper.cropImage(
@@ -139,9 +145,9 @@ class _ViewPageState extends State<ViewPage> {
     }
   }
 
+  // initialize variables and crop image directed to this page
   @override
   void initState() {
-    // TODO: implement initState
     setState(() {
       isPressed = false;
       isToastShown = false;

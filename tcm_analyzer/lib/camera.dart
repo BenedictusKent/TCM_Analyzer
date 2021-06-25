@@ -5,17 +5,20 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tcm_analyzer/home.dart';
 
+// App camera page
 class CameraScreen extends StatefulWidget {
   @override
   _CameraScreenState createState() => _CameraScreenState();
 }
 
 class _CameraScreenState extends State<CameraScreen> {
+  // declarations
   CameraController controller;
   List cameras;
   int selectedCameraIndex;
   String imgPath;
 
+  // initalize all available cameras at start of the page
   @override
   void initState() {
     super.initState();
@@ -91,6 +94,7 @@ class _CameraScreenState extends State<CameraScreen> {
     );
   }
 
+  // function to initialize camera
   Future _initCameraController(CameraDescription cameraDescription) async {
     if (controller != null) {
       await controller.dispose();
@@ -116,6 +120,7 @@ class _CameraScreenState extends State<CameraScreen> {
     }
   }
 
+  // function to display camera view
   Widget _cameraPreviewWidget() {
     if (controller == null || !controller.value.isInitialized) {
       return const Text(
@@ -130,12 +135,9 @@ class _CameraScreenState extends State<CameraScreen> {
     );
   }
 
+  // function to take image when button is pressed
   void _onCapturePressed(context) async {
     try {
-      final path = join(
-        (await getTemporaryDirectory()).path,
-        '${DateTime.now()}.png',
-      );
       XFile test = await controller.takePicture();
       Navigator.pushNamed(context, '/view', arguments: test);
     } catch (e) {

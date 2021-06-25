@@ -5,6 +5,7 @@ import 'package:tcm_analyzer/camera.dart';
 import 'package:tcm_analyzer/view.dart';
 import 'package:tcm_analyzer/result.dart';
 
+// App routing and their required arguments
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
@@ -21,13 +22,15 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) {
           ScreenArguments arguments = args;
           return ResultPage(
-              responseData: arguments.resData, decodedImgBytes: arguments.nameData);
+              responseData: arguments.resData,
+              decodedImgBytes: arguments.nameData);
         });
       default:
         return _errorRoute();
     }
   }
 
+  // if page not found
   static Route<dynamic> _errorRoute() {
     return MaterialPageRoute(builder: (_) {
       return Scaffold(

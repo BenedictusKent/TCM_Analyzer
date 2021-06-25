@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:typed_data';
 import 'package:tcm_analyzer/classes.dart';
 
+// Result page
 class ResultPage extends StatefulWidget {
   final List responseData;
   final Uint8List decodedImgBytes;
@@ -41,6 +42,7 @@ class _ResultPageState extends State<ResultPage> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
+            // show bounded image
             Padding(
               padding: const EdgeInsets.all(20),
               child: Image.memory(
@@ -50,13 +52,13 @@ class _ResultPageState extends State<ResultPage> {
                 fit: BoxFit.cover,
               ),
             ),
+            // show list of predicted herbs
             isResultNull
                 ? Center(
                     child: Text(
                       "Sorry, no herb predicted.",
                       style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold),
+                          fontSize: 24, fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
                   )
@@ -127,6 +129,7 @@ class _ResultPageState extends State<ResultPage> {
   }
 }
 
+// function to pass multiple arguments from one page to this page
 class ScreenArguments {
   final List resData;
   final Uint8List nameData;

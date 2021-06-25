@@ -1,4 +1,5 @@
 class autoComplete {
+  // function to get suggestions from search bar
   static Future<List> getSuggestions(String query) async {
     final List<String> herbs = [
       'Baikal Skullcap Root',
