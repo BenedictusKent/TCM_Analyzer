@@ -55,9 +55,8 @@ class _CameraScreenState extends State<CameraScreen> {
               children: <Widget>[
                 Container(
                   height: (MediaQuery.of(context).size.height -
-                          appBar.preferredSize.height) *
-                      6.5 /
-                      8,
+                          appBar.preferredSize.height) -
+                      158,
                   width: MediaQuery.of(context).size.width,
                   child: _cameraPreviewWidget(),
                 ),
@@ -77,9 +76,8 @@ class _CameraScreenState extends State<CameraScreen> {
             ),
             Container(
               height: (MediaQuery.of(context).size.height -
-                      appBar.preferredSize.height) *
-                  1.18 /
-                  8,
+                      appBar.preferredSize.height) -
+                  719,
               width: MediaQuery.of(context).size.width,
               alignment: Alignment.center,
               color: Color(0xFE2B3F87),
