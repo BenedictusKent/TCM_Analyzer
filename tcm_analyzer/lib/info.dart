@@ -110,6 +110,7 @@ class _InfoPageState extends State<InfoPage> {
     if (text.length <= 1) {
       return text.toUpperCase();
     }
+    text = text.toLowerCase();
     final List<String> words = text.split(' ');
     final capitalizedWords = words.map((word) {
       if (word.trim().isNotEmpty) {
