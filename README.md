@@ -11,6 +11,8 @@ If used on other phones, some adjustments are required.
 ## Things to install
 
 - Flutter
+- Python 3.x
+- Python packages (OpenCv2, Docker, nvidia-docker2, etc.)
 - IDE (VS Code, Android Studio, etc.)
 
 ## Installation  
@@ -36,7 +38,7 @@ If used on other phones, some adjustments are required.
 ### IDE: Android Studio
 Refer the installation guides [here](https://flutter.dev/docs/development/tools/android-studio).
 
-## How to run (Android)  
+## How to deploy app (Android)
 Make sure device has version Android Oreo or higher.  
 Below is the instruction on how to deploy app to device:
 
@@ -46,6 +48,20 @@ Below is the instruction on how to deploy app to device:
 2. Once target device is found, click F5 or go to ```Run and Debug``` tab on the left menu pane and press the green button on top to deploy app to device.  
 
 Process is going to take a while especially if it is loaded the first time or there is huge update.
+
+## How to deploy server
+To deploy the model on the server, we use **docker** to manage the model instance.  
+You have to already set up **docker and nvidia-docker2** to run this.  
+
+In /codes/fastapi/, open terminal and execute:
+```bash
+docker-compose up -d
+```  
+  
+We expose port 8888, so we have to open port 8888 to public.  
+Now the api can be accessed by using <host>:8888.  
+This will be used later in the application to <ins>send image and return prediction</ins> from the server.
+
 
 ## Things to change
 All dimensions need to be changed according to the device. Only numbers are changed.  
